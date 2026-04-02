@@ -1,0 +1,13 @@
+{{- $value := lower (printf "%v" (.value | default "")) -}}
+{{- $fallback := printf "%v" (.fallback | default (.value | default "")) -}}
+{{- $label := $fallback -}}
+
+{{- if eq $value "easy" -}}
+  {{- $label = "入门" -}}
+{{- else if eq $value "medium" -}}
+  {{- $label = "中等" -}}
+{{- else if eq $value "hard" -}}
+  {{- $label = "困难" -}}
+{{- end -}}
+
+{{- return $label -}}

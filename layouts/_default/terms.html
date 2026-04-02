@@ -11,8 +11,12 @@
   <section class="surface">
     <div class="term-grid">
       {{ range $terms }}
+        {{ $termTitle := .Page.Title }}
+        {{ if eq $.Data.Plural "difficulties" }}
+          {{ $termTitle = partial "difficulty-label.html" (dict "value" .Page.Title "fallback" .Page.Title) }}
+        {{ end }}
         <a class="term-card" href="{{ .Page.RelPermalink }}">
-          <strong>{{ .Page.Title }}</strong>
+          <strong>{{ $termTitle }}</strong>
           <span>{{ .Count }} 篇内容</span>
         </a>
       {{ end }}

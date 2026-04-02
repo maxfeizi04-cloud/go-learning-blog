@@ -16,6 +16,7 @@ snippets = "/snippets/:slug/"
 [taxonomies]
 tag = "tags"
 series = "series"
+difficulty = "difficulties"
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]

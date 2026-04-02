@@ -1,6 +1,12 @@
 {{ define "main" }}
 {{ $hasToc := and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0) }}
 {{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" (.Section | humanize)) }}
+{{ $isAlgorithm := eq .Params.isAlgorithm true }}
+{{ $difficulty := .Params.difficulty | default "" }}
+{{ $difficultyLabel := "" }}
+{{ if $difficulty }}
+  {{ $difficultyLabel = partial "difficulty-label.html" (dict "value" $difficulty "fallback" $difficulty) }}
+{{ end }}
 <article class="article-shell{{ if $hasToc }} article-shell--with-toc{{ else }} article-shell--solo{{ end }}">
   <header class="article-head">
     <p class="eyebrow">{{ $sectionLabel }}</p>
@@ -15,6 +21,16 @@
         <span>系列：{{ index . 0 }}</span>
       {{ end }}
     </div>
+    {{ if or $isAlgorithm $difficulty }}
+      <div class="article-badge-row">
+        {{ if $isAlgorithm }}
+          <span class="badge badge--algo">算法题解</span>
+        {{ end }}
+        {{ if $difficulty }}
+          <span class="badge badge--difficulty badge--difficulty-{{ lower $difficulty }}">难度：{{ $difficultyLabel }}</span>
+        {{ end }}
+      </div>
+    {{ end }}
     {{ with .Params.tags }}
       <div class="tag-row">
         {{ range . }}

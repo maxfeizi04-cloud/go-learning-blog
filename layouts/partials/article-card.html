@@ -1,9 +1,25 @@
+{{ $isAlgorithm := eq .Params.isAlgorithm true }}
+{{ $difficulty := .Params.difficulty | default "" }}
+{{ $difficultyLabel := "" }}
+{{ if $difficulty }}
+  {{ $difficultyLabel = partial "difficulty-label.html" (dict "value" $difficulty "fallback" $difficulty) }}
+{{ end }}
 <article class="article-card">
   <a class="article-card__link" href="{{ .RelPermalink }}">
     <div class="article-card__meta">
       <span>{{ .Date.Format site.Params.dateFormat }}</span>
       <span>{{ .ReadingTime }} 分钟</span>
     </div>
+    {{ if or $isAlgorithm $difficulty }}
+      <div class="article-card__badges">
+        {{ if $isAlgorithm }}
+          <span class="badge badge--algo">算法题解</span>
+        {{ end }}
+        {{ if $difficulty }}
+          <span class="badge badge--difficulty badge--difficulty-{{ lower $difficulty }}">{{ $difficultyLabel }}</span>
+        {{ end }}
+      </div>
+    {{ end }}
     <h3>{{ .Title }}</h3>
     <p>{{ .Summary | default (.Plain | truncate 110) }}</p>
     {{ with .Params.tags }}

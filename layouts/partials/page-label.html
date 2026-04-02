@@ -18,6 +18,8 @@
     {{- $label = "标签" -}}
   {{- else if eq $value "series" -}}
     {{- $label = "系列" -}}
+  {{- else if or (eq $value "difficulty") (eq $value "difficulties") -}}
+    {{- $label = "难度" -}}
   {{- end -}}
 {{- end -}}
 

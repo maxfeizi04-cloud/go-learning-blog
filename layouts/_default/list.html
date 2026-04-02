@@ -12,6 +12,28 @@
   {{ end }}
 </section>
 
+{{ if eq .Section "posts" }}
+  <section class="surface filter-panel">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">快速筛选</p>
+        <h2>算法难度与标签筛选</h2>
+      </div>
+    </div>
+    <div class="filter-row">
+      <a class="filter-pill filter-pill--active" href="{{ "posts/" | relURL }}">全部文章</a>
+      <a class="filter-pill" href="{{ "tags/algorithm/" | relURL }}">算法题解</a>
+      <a class="filter-pill" href="{{ "difficulties/easy/" | relURL }}">入门</a>
+      <a class="filter-pill" href="{{ "difficulties/medium/" | relURL }}">中等</a>
+      <a class="filter-pill" href="{{ "tags/array/" | relURL }}">#数组</a>
+      <a class="filter-pill" href="{{ "tags/hash-table/" | relURL }}">#哈希表</a>
+      <a class="filter-pill" href="{{ "tags/binary-search/" | relURL }}">#二分</a>
+      <a class="filter-pill" href="{{ "tags/dynamic-programming/" | relURL }}">#动态规划</a>
+      <a class="filter-pill" href="{{ "tags/monotonic-stack/" | relURL }}">#单调栈</a>
+    </div>
+  </section>
+{{ end }}
+
 {{ $pages := .Pages.ByDate.Reverse }}
 {{ if gt (len $pages) 0 }}
   {{ $paginator := .Paginate $pages }}

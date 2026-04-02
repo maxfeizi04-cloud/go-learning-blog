@@ -2,6 +2,7 @@
 {{ $posts := where site.RegularPages.ByDate.Reverse "Section" "posts" }}
 {{ $snippets := where site.RegularPages.ByDate.Reverse "Section" "snippets" }}
 {{ $algoPosts := where $posts "Params.isAlgorithm" true }}
+{{ $goPosts := where $posts "Params.isAlgorithm" "ne" true }}
 
 <section class="hero">
   <div class="hero__copy">
@@ -34,6 +35,46 @@
   </div>
 </section>
 
+<section class="split-grid">
+  <section class="surface entry-panel">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Go 工程</p>
+        <h2>最近 Go 工程文章</h2>
+      </div>
+      <a class="text-link" href="{{ "posts/" | relURL }}">查看全部</a>
+    </div>
+    <div class="entry-list">
+      {{ range first 3 $goPosts }}
+        <a class="entry-card" href="{{ .RelPermalink }}">
+          <strong>{{ .Title }}</strong>
+          <p>{{ .Summary | default (.Plain | truncate 88) }}</p>
+          <span class="entry-card__meta">{{ .Date.Format site.Params.dateFormat }}</span>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="surface entry-panel">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">算法题解</p>
+        <h2>最近算法题解</h2>
+      </div>
+      <a class="text-link" href="{{ "tags/algorithm/" | relURL }}">继续查看</a>
+    </div>
+    <div class="entry-list">
+      {{ range first 3 $algoPosts }}
+        <a class="entry-card" href="{{ .RelPermalink }}">
+          <strong>{{ .Title }}</strong>
+          <p>{{ .Summary | default (.Plain | truncate 88) }}</p>
+          <span class="entry-card__meta">{{ with .Params.difficulty }}{{ partial "difficulty-label.html" (dict "value" . "fallback" .) }} · {{ end }}{{ .Date.Format site.Params.dateFormat }}</span>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+</section>
+
 <section class="surface">
   <div class="section-head">
     <div>
@@ -49,24 +90,6 @@
     {{ end }}
   </div>
 </section>
-
-{{ if gt (len $algoPosts) 0 }}
-<section class="surface">
-  <div class="section-head">
-    <div>
-      <p class="eyebrow">算法专题</p>
-      <h2>算法学习与题解复盘</h2>
-    </div>
-    <a class="text-link" href="{{ "posts/" | relURL }}">继续查看</a>
-  </div>
-
-  <div class="card-grid">
-    {{ range first 3 $algoPosts }}
-      {{ partial "article-card.html" . }}
-    {{ end }}
-  </div>
-</section>
-{{ end }}
 
 <section class="surface surface--muted">
   <div class="section-head">

@@ -1,8 +1,12 @@
 {{ define "main" }}
 {{ $taxonomyLabel := partial "page-label.html" (dict "kind" "taxonomy" "value" .Data.Singular "fallback" (.Data.Singular | humanize)) }}
+{{ $pageTitle := .Title }}
+{{ if eq .Data.Singular "difficulty" }}
+  {{ $pageTitle = partial "difficulty-label.html" (dict "value" .Title "fallback" .Title) }}
+{{ end }}
 <section class="page-hero">
   <p class="eyebrow">{{ $taxonomyLabel }}</p>
-  <h1>{{ .Title }}</h1>
+  <h1>{{ $pageTitle }}</h1>
   <p class="page-hero__lead">围绕这个{{ $taxonomyLabel }}整理的 Go 学习内容。</p>
 </section>
 
