@@ -8,6 +8,7 @@ series = ["算法与数据结构"]
 slug = "dp-climbing-stairs"
 isAlgorithm = true
 difficulty = "easy"
+difficulties = ["easy"]
 source = "LeetCode"
 problemId = "70"
 +++

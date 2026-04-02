@@ -8,6 +8,7 @@ series = ["算法与数据结构"]
 slug = "monotonic-stack-next-greater"
 isAlgorithm = true
 difficulty = "medium"
+difficulties = ["medium"]
 source = "LeetCode"
 problemId = "496"
 +++

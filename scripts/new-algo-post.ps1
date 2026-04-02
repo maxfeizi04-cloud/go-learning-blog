@@ -1,4 +1,4 @@
-param(
+﻿param(
   [Parameter(Mandatory = $true)]
   [string]$Title,
   [string]$Slug,
@@ -67,7 +67,7 @@ if (Test-Path $targetFile) {
 $date = (Get-Date).ToString('yyyy-MM-ddTHH:mm:sszzz')
 $tagsWithAlgo = @('algorithm') + $Tags | Select-Object -Unique
 $tagsToml = if ($tagsWithAlgo.Count -gt 0) { ($tagsWithAlgo | ForEach-Object { '"' + (Escape-TomlString $_) + '"' }) -join ', ' } else { '' }
-$difficultyToml = if ($Difficulty) { 'difficulty = "' + $difficultyEscaped + '"' } else { '' }
+$difficultyToml = if ($Difficulty) { 'difficulty = "' + $difficultyEscaped + '"' + "`r`n" + 'difficulties = ["' + $difficultyEscaped + '"]' } else { '' }
 $sourceToml = if ($Source) { 'source = "' + $sourceEscaped + '"' } else { '' }
 $problemIdToml = if ($ProblemId) { 'problemId = "' + $problemIdEscaped + '"' } else { '' }
 $draftValue = if ($Publish) { 'false' } else { 'true' }
