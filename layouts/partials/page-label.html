@@ -12,6 +12,12 @@
     {{- $label = "搜索" -}}
   {{- else if eq $value "about" -}}
     {{- $label = "关于" -}}
+  {{- else if eq $value "algorithms" -}}
+    {{- $label = "算法专题" -}}
+  {{- else if eq $value "go-modules" -}}
+    {{- $label = "模块专题" -}}
+  {{- else if eq $value "go-engineering" -}}
+    {{- $label = "Go 工程" -}}
   {{- end -}}
 {{- else if eq $kind "taxonomy" -}}
   {{- if or (eq $value "tag") (eq $value "tags") -}}

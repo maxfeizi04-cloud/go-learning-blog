@@ -1,0 +1,64 @@
+{{ define "main" }}
+{{ $algoPosts := where site.RegularPages.ByDate.Reverse "Params.isAlgorithm" true }}
+{{ $topics := slice
+  (dict "title" "数组与哈希" "description" "适合练习查找、计数、映射与下标关系。" "href" ("tags/array/" | relURL) "tag" "array")
+  (dict "title" "二分查找" "description" "重点是边界定义、循环不变量和查找区间。" "href" ("tags/binary-search/" | relURL) "tag" "binary-search")
+  (dict "title" "单调栈" "description" "适合处理下一个更大元素、温度、区间贡献等问题。" "href" ("tags/monotonic-stack/" | relURL) "tag" "monotonic-stack")
+  (dict "title" "动态规划" "description" "从状态定义、转移方程到滚动优化的思路整理。" "href" ("tags/dynamic-programming/" | relURL) "tag" "dynamic-programming")
+  (dict "title" "难度：入门" "description" "适合快速建立题感和基本模板。" "href" ("difficulties/easy/" | relURL) "difficulty" "easy")
+  (dict "title" "难度：中等" "description" "适合训练边界处理、状态设计和综合能力。" "href" ("difficulties/medium/" | relURL) "difficulty" "medium")
+}}
+<section class="page-hero">
+  <p class="eyebrow">算法专题</p>
+  <h1>{{ .Title }}</h1>
+  <p class="page-hero__lead">{{ .Description }}</p>
+</section>
+
+<section class="surface">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">专题索引</p>
+      <h2>按知识点复习</h2>
+    </div>
+  </div>
+
+  <div class="topic-grid">
+    {{ range $topics }}
+      {{ $count := 0 }}
+      {{ if isset . "tag" }}
+        {{ $count = len (where $algoPosts "Params.tags" "intersect" (slice .tag)) }}
+      {{ else if isset . "difficulty" }}
+        {{ $count = len (where $algoPosts "Params.difficulty" .difficulty) }}
+      {{ end }}
+      <a class="topic-card" href="{{ .href }}">
+        <strong>{{ .title }}</strong>
+        <p>{{ .description }}</p>
+        <span>{{ $count }} 篇文章</span>
+      </a>
+    {{ end }}
+  </div>
+</section>
+
+{{ if gt (len $algoPosts) 0 }}
+<section class="surface surface--muted">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">最新题解</p>
+      <h2>最近算法学习记录</h2>
+    </div>
+    <a class="text-link" href="{{ "tags/algorithm/" | relURL }}">查看全部算法文章</a>
+  </div>
+
+  <div class="card-grid">
+    {{ range first 6 $algoPosts }}
+      {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+{{ else }}
+<section class="surface empty-state">
+  <h2>这里暂时还没有算法文章</h2>
+  <p>你可以先用 `new-algo-post.ps1` 新建一篇题解，再回到这里集中复习。</p>
+</section>
+{{ end }}
+{{ end }}

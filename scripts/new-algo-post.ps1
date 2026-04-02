@@ -4,6 +4,8 @@ param(
   [string]$Slug,
   [string[]]$Tags = @(),
   [string]$Difficulty = "",
+  [string]$Source = "LeetCode",
+  [string]$ProblemId = "",
   [string]$Series = "算法与数据结构",
   [switch]$Publish
 )
@@ -50,6 +52,8 @@ $resolvedSlug = Assert-Slug $resolvedSlug
 
 $titleEscaped = Escape-TomlString $Title
 $difficultyEscaped = Escape-TomlString $Difficulty
+$sourceEscaped = Escape-TomlString $Source
+$problemIdEscaped = Escape-TomlString $ProblemId
 $seriesEscaped = Escape-TomlString $Series
 $postsRoot = Resolve-SafePath (Join-Path $PSScriptRoot '..\content\posts') '.'
 $targetDir = Resolve-SafePath $postsRoot $resolvedSlug
@@ -64,6 +68,8 @@ $date = (Get-Date).ToString('yyyy-MM-ddTHH:mm:sszzz')
 $tagsWithAlgo = @('algorithm') + $Tags | Select-Object -Unique
 $tagsToml = if ($tagsWithAlgo.Count -gt 0) { ($tagsWithAlgo | ForEach-Object { '"' + (Escape-TomlString $_) + '"' }) -join ', ' } else { '' }
 $difficultyToml = if ($Difficulty) { 'difficulty = "' + $difficultyEscaped + '"' } else { '' }
+$sourceToml = if ($Source) { 'source = "' + $sourceEscaped + '"' } else { '' }
+$problemIdToml = if ($ProblemId) { 'problemId = "' + $problemIdEscaped + '"' } else { '' }
 $draftValue = if ($Publish) { 'false' } else { 'true' }
 
 $content = @"
@@ -77,6 +83,8 @@ series = ["$seriesEscaped"]
 slug = "$resolvedSlug"
 isAlgorithm = true
 $difficultyToml
+$sourceToml
+$problemIdToml
 +++
 
 ## 题目

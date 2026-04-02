@@ -8,6 +8,8 @@ series = ["算法与数据结构"]
 slug = "binary-search-boundary"
 isAlgorithm = true
 difficulty = "medium"
+source = "LeetCode"
+problemId = "704"
 +++
 
 ## 题目

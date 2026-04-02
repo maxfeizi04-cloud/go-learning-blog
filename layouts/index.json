@@ -2,15 +2,20 @@
 [
   {{- range $index, $page := $pages -}}
     {{- if gt $index 0 }},{{ end }}
+    {{- $source := $page.Params.source | default "" -}}
+    {{- $problemId := $page.Params.problemId | default "" -}}
+    {{- $searchExtra := printf "%s %s" $source $problemId -}}
     {
       "title": {{ $page.Title | jsonify }},
-      "summary": {{ ($page.Summary | default ($page.Plain | truncate 160)) | plainify | htmlUnescape | jsonify }},
-      "content": {{ ($page.Plain | plainify | htmlUnescape | replaceRE "\\s+" " ") | jsonify }},
+      "summary": {{ (printf "%s %s" $searchExtra ($page.Summary | default ($page.Plain | truncate 160))) | plainify | htmlUnescape | jsonify }},
+      "content": {{ (printf "%s %s %s" $searchExtra $page.Title ($page.Plain | plainify | htmlUnescape | replaceRE "\\s+" " ")) | plainify | htmlUnescape | jsonify }},
       "section": {{ $page.Section | jsonify }},
       "date": {{ $page.Date.Format "2006-01-02" | jsonify }},
       "permalink": {{ $page.RelPermalink | jsonify }},
       "tags": {{ $page.Params.tags | default (slice) | jsonify }},
-      "series": {{ $page.Params.series | default (slice) | jsonify }}
+      "series": {{ $page.Params.series | default (slice) | jsonify }},
+      "source": {{ $source | jsonify }},
+      "problemId": {{ $problemId | jsonify }}
     }
   {{- end -}}
 ]

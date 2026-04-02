@@ -7,6 +7,16 @@
 {{ if $difficulty }}
   {{ $difficultyLabel = partial "difficulty-label.html" (dict "value" $difficulty "fallback" $difficulty) }}
 {{ end }}
+{{ $source := .Params.source | default "" }}
+{{ $problemId := .Params.problemId | default "" }}
+{{ $problemLabel := "" }}
+{{ if or $source $problemId }}
+  {{ if and $source $problemId }}
+    {{ $problemLabel = printf "%s %s" $source $problemId }}
+  {{ else }}
+    {{ $problemLabel = or $source $problemId }}
+  {{ end }}
+{{ end }}
 <article class="article-shell{{ if $hasToc }} article-shell--with-toc{{ else }} article-shell--solo{{ end }}">
   <header class="article-head">
     <p class="eyebrow">{{ $sectionLabel }}</p>
@@ -20,11 +30,17 @@
       {{ with .Params.series }}
         <span>系列：{{ index . 0 }}</span>
       {{ end }}
+      {{ if $problemLabel }}
+        <span>题号：{{ $problemLabel }}</span>
+      {{ end }}
     </div>
-    {{ if or $isAlgorithm $difficulty }}
+    {{ if or $isAlgorithm $problemLabel $difficulty }}
       <div class="article-badge-row">
         {{ if $isAlgorithm }}
           <span class="badge badge--algo">算法题解</span>
+        {{ end }}
+        {{ if $problemLabel }}
+          <span class="badge badge--source">{{ $problemLabel }}</span>
         {{ end }}
         {{ if $difficulty }}
           <span class="badge badge--difficulty badge--difficulty-{{ lower $difficulty }}">难度：{{ $difficultyLabel }}</span>

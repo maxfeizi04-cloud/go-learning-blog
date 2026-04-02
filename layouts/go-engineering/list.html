@@ -1,0 +1,57 @@
+{{ define "main" }}
+{{ $goPosts := where site.RegularPages.ByDate.Reverse "Section" "posts" }}
+{{ $goPosts = where $goPosts "Params.isAlgorithm" "ne" true }}
+{{ $topics := slice
+  (dict "title" "Go 并发与控制流" "description" "聚合 goroutine、channel、context 等并发主题。" "href" ("series/go-并发与控制流/" | relURL) "series" "Go 并发与控制流")
+  (dict "title" "Go 工程化实践" "description" "围绕错误处理、模块管理、依赖组织和项目结构展开。" "href" ("series/go-工程化实践/" | relURL) "series" "Go 工程化实践")
+  (dict "title" "Go 模块与依赖管理" "description" "集中复习 go.mod、go.sum、replace、go work 等模块内容。" "href" ("go-modules/" | relURL) "series" "Go 模块与依赖管理")
+}}
+<section class="page-hero">
+  <p class="eyebrow">Go 工程</p>
+  <h1>{{ .Title }}</h1>
+  <p class="page-hero__lead">{{ .Description }}</p>
+</section>
+
+<section class="surface">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">专题索引</p>
+      <h2>按 Go 能力复习</h2>
+    </div>
+  </div>
+
+  <div class="topic-grid">
+    {{ range $topics }}
+      {{ $count := len (where $goPosts "Params.series" "intersect" (slice .series)) }}
+      <a class="topic-card" href="{{ .href }}">
+        <strong>{{ .title }}</strong>
+        <p>{{ .description }}</p>
+        <span>{{ $count }} 篇文章</span>
+      </a>
+    {{ end }}
+  </div>
+</section>
+
+{{ if gt (len $goPosts) 0 }}
+<section class="surface surface--muted">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">最新文章</p>
+      <h2>最近 Go 工程文章</h2>
+    </div>
+    <a class="text-link" href="{{ "posts/" | relURL }}">查看全部文章</a>
+  </div>
+
+  <div class="card-grid">
+    {{ range first 6 $goPosts }}
+      {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+{{ else }}
+<section class="surface empty-state">
+  <h2>这里暂时还没有 Go 工程文章</h2>
+  <p>后面你补充更多并发、工程化和模块实践文章后，这里会自动聚合出来。</p>
+</section>
+{{ end }}
+{{ end }}

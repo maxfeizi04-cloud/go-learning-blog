@@ -8,6 +8,8 @@ series = ["算法与数据结构"]
 slug = "two-sum-hash-table"
 isAlgorithm = true
 difficulty = "easy"
+source = "LeetCode"
+problemId = "1"
 +++
 
 ## 题目

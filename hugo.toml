@@ -12,6 +12,8 @@ pagerSize = 9
 [permalinks]
 posts = "/posts/:slug/"
 snippets = "/snippets/:slug/"
+algorithms = "/algorithms/"
+go-modules = "/go-modules/"
 
 [taxonomies]
 tag = "tags"
@@ -42,7 +44,7 @@ term = ["HTML", "RSS"]
 
 [params]
 description = "记录 Go 学习、算法题解、工程实践、性能优化和踩坑复盘。"
-author = "Feizi"
+author = "GoJourney"
 siteIntro = "把 Go 工程学习与算法训练沉淀成可复用的知识库。"
 sitePitch = "这里主要记录 Go 基础、并发模型、Web 开发、工程化实践，以及数组、树、图、动态规划等算法题解与刷题复盘。"
 email = "orb_wy_yzz@163.com"
@@ -75,16 +77,26 @@ url = "/posts/"
 weight = 2
 
 [[menu.main]]
+name = "算法专题"
+url = "/algorithms/"
+weight = 3
+
+[[menu.main]]
+name = "模块专题"
+url = "/go-modules/"
+weight = 4
+
+[[menu.main]]
 name = "代码片段"
 url = "/snippets/"
-weight = 3
+weight = 5
 
 [[menu.main]]
 name = "标签"
 url = "/tags/"
-weight = 4
+weight = 6
 
 [[menu.main]]
 name = "关于"
 url = "/about/"
-weight = 5
+weight = 7

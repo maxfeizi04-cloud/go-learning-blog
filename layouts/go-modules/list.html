@@ -1,0 +1,55 @@
+{{ define "main" }}
+{{ $modulePosts := where site.RegularPages.ByDate.Reverse "Params.series" "intersect" (slice "Go 模块与依赖管理") }}
+{{ $topics := slice
+  (dict "title" "go.mod 与 go.sum" "description" "理解模块声明、依赖记录和校验文件的角色分工。" "href" ("tags/go-mod/" | relURL) "tag" "go-mod")
+  (dict "title" "replace 与本地联调" "description" "适合处理本地调试、替换依赖和多模块开发。" "href" ("tags/replace/" | relURL) "tag" "replace")
+  (dict "title" "go work" "description" "管理多模块 workspace，降低本地联调成本。" "href" ("tags/go-work/" | relURL) "tag" "go-work")
+  (dict "title" "依赖升级与版本" "description" "围绕版本选择、升级策略和兼容性变化做复盘。" "href" ("tags/dependency-management/" | relURL) "tag" "dependency-management")
+}}
+<section class="page-hero">
+  <p class="eyebrow">模块专题</p>
+  <h1>{{ .Title }}</h1>
+  <p class="page-hero__lead">{{ .Description }}</p>
+</section>
+
+<section class="surface">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">专题索引</p>
+      <h2>按模块能力复习</h2>
+    </div>
+  </div>
+  <div class="topic-grid">
+    {{ range $topics }}
+      {{ $count := len (where $modulePosts "Params.tags" "intersect" (slice .tag)) }}
+      <a class="topic-card" href="{{ .href }}">
+        <strong>{{ .title }}</strong>
+        <p>{{ .description }}</p>
+        <span>{{ $count }} 篇文章</span>
+      </a>
+    {{ end }}
+  </div>
+</section>
+
+{{ if gt (len $modulePosts) 0 }}
+<section class="surface surface--muted">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">最新文章</p>
+      <h2>最近 Go 模块学习记录</h2>
+    </div>
+    <a class="text-link" href="{{ "posts/" | relURL }}">查看全部文章</a>
+  </div>
+  <div class="card-grid">
+    {{ range first 6 $modulePosts }}
+      {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+{{ else }}
+<section class="surface empty-state">
+  <h2>这里暂时还没有模块文章</h2>
+  <p>可以先从 go.mod、go.sum、replace 和 go work 相关主题开始补齐。</p>
+</section>
+{{ end }}
+{{ end }}
