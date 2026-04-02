@@ -1,0 +1,16 @@
+{{- $pages := where site.RegularPages.ByDate.Reverse "Section" "in" site.Params.mainSections -}}
+[
+  {{- range $index, $page := $pages -}}
+    {{- if gt $index 0 }},{{ end }}
+    {
+      "title": {{ $page.Title | jsonify }},
+      "summary": {{ ($page.Summary | default ($page.Plain | truncate 160)) | plainify | htmlUnescape | jsonify }},
+      "content": {{ ($page.Plain | plainify | htmlUnescape | replaceRE "\\s+" " ") | jsonify }},
+      "section": {{ $page.Section | jsonify }},
+      "date": {{ $page.Date.Format "2006-01-02" | jsonify }},
+      "permalink": {{ $page.RelPermalink | jsonify }},
+      "tags": {{ $page.Params.tags | default (slice) | jsonify }},
+      "series": {{ $page.Params.series | default (slice) | jsonify }}
+    }
+  {{- end -}}
+]

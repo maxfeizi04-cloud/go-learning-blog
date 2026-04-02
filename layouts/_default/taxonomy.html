@@ -1,0 +1,26 @@
+{{ define "main" }}
+{{ $taxonomyLabel := partial "page-label.html" (dict "kind" "taxonomy" "value" .Data.Singular "fallback" (.Data.Singular | humanize)) }}
+<section class="page-hero">
+  <p class="eyebrow">{{ $taxonomyLabel }}</p>
+  <h1>{{ .Title }}</h1>
+  <p class="page-hero__lead">围绕这个{{ $taxonomyLabel }}整理的 Go 学习内容。</p>
+</section>
+
+{{ $pages := .Pages.ByDate.Reverse }}
+{{ if gt (len $pages) 0 }}
+  {{ $paginator := .Paginate $pages }}
+  <section class="surface">
+    <div class="card-grid">
+      {{ range $paginator.Pages }}
+        {{ partial "article-card.html" . }}
+      {{ end }}
+    </div>
+  </section>
+  {{ partial "pager.html" $paginator }}
+{{ else }}
+  <section class="surface empty-state">
+    <h2>这里暂时还没有内容</h2>
+    <p>等你写下更多和这个{{ $taxonomyLabel }}相关的 Go 学习笔记后，这里会自动汇总出来。</p>
+  </section>
+{{ end }}
+{{ end }}

@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="page-hero">
+  <p class="eyebrow">搜索</p>
+  <h1>{{ .Title }}</h1>
+  <p class="page-hero__lead">{{ .Description }}</p>
+</section>
+
+<section class="surface search-page" data-search-page>
+  <div class="search-page__bar">
+    {{ partial "search-box.html" (dict "id" "search-page-input") }}
+    <p class="search-page__status" data-search-page-status>输入关键词开始搜索，支持单字。</p>
+    <div class="search-history search-history--page" data-search-page-history hidden></div>
+  </div>
+
+  <div class="search-page__results" data-search-page-results></div>
+</section>
+{{ end }}

@@ -1,0 +1,73 @@
+{{ define "main" }}
+{{ $posts := where site.RegularPages.ByDate.Reverse "Section" "posts" }}
+{{ $snippets := where site.RegularPages.ByDate.Reverse "Section" "snippets" }}
+
+<section class="hero">
+  <div class="hero__copy">
+    <p class="eyebrow">Go 学习手记</p>
+    <h1>{{ site.Title }}</h1>
+    <p class="hero__lead">{{ site.Params.siteIntro }}</p>
+    <p class="hero__body">{{ site.Params.sitePitch }}</p>
+    <div class="hero__actions">
+      <a class="button button--primary" href="{{ "posts/" | relURL }}">开始阅读</a>
+      <a class="button button--secondary" href="{{ "about/" | relURL }}">了解我</a>
+    </div>
+  </div>
+
+  <div class="hero__panel">
+    <div class="metric-card">
+      <span class="metric-card__label">内容结构</span>
+      <strong>学习记录 + 代码片段</strong>
+      <p>长文用于沉淀完整理解，短笔记用于快速复盘和备忘。</p>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__label">学习主线</span>
+      <strong>并发、工程化、性能</strong>
+      <p>围绕真实开发中最常遇到的 Go 能力逐步积累。</p>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__label">更新方式</span>
+      <strong>Markdown 写作</strong>
+      <p>所有内容都保存在仓库里，方便版本管理和持续发布。</p>
+    </div>
+  </div>
+</section>
+
+<section class="surface">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">最新更新</p>
+      <h2>最新学习记录</h2>
+    </div>
+    <a class="text-link" href="{{ "posts/" | relURL }}">查看全部</a>
+  </div>
+
+  <div class="card-grid">
+    {{ range first 6 $posts }}
+      {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+
+<section class="surface surface--muted">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">短笔记</p>
+      <h2>短笔记与代码片段</h2>
+    </div>
+    <a class="text-link" href="{{ "snippets/" | relURL }}">查看更多</a>
+  </div>
+
+  <div class="snippet-list">
+    {{ range first 4 $snippets }}
+      <a class="snippet-item" href="{{ .RelPermalink }}">
+        <div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ .Summary | default (.Plain | truncate 96) }}</p>
+        </div>
+        <span>{{ .Date.Format site.Params.dateFormat }}</span>
+      </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

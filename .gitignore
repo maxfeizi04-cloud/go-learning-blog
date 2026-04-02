@@ -1,0 +1,8 @@
+public/
+resources/_gen/
+.hugo_build.lock
+.site-check/
+.codex-run/
+.DS_Store
+Thumbs.db
+.idea/

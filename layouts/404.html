@@ -1,0 +1,11 @@
+{{ define "main" }}
+<section class="page-hero">
+  <p class="eyebrow">404</p>
+  <h1>这个页面没有找到</h1>
+  <p class="page-hero__lead">可能是链接失效了，也可能是文章路径已经调整。</p>
+  <div class="hero__actions">
+    <a class="button button--primary" href="{{ "/" | relURL }}">回到首页</a>
+    <a class="button button--secondary" href="{{ "/posts/" | relURL }}">查看文章</a>
+  </div>
+</section>
+{{ end }}

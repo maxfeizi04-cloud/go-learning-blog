@@ -1,0 +1,34 @@
+{{ $pageTitle := .Title }}
+{{ if .IsSection }}
+  {{ $pageTitle = partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" .Title) }}
+{{ end }}
+{{ if eq .Kind "taxonomy" }}
+  {{ $pageTitle = partial "page-label.html" (dict "kind" "taxonomy" "value" .Data.Plural "fallback" .Title) }}
+{{ end }}
+{{ $title := cond .IsHome site.Title (printf "%s | %s" $pageTitle site.Title) }}
+{{ $description := .Description | default .Summary | default site.Params.description | plainify | htmlUnescape }}
+{{ $image := "/images/og-default.svg" | absURL }}
+{{ if .Params.cover }}
+  {{ $image = (.Params.cover | absURL) }}
+{{ end }}
+{{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<meta name="author" content="{{ site.Params.author }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{ with .OutputFormats.Get "RSS" }}
+<link rel="alternate" type="application/rss+xml" title="{{ $pageTitle | default site.Title }}" href="{{ .RelPermalink }}">
+{{ end }}
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ $image }}">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ $image }}">

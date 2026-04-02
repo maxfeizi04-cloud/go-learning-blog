@@ -1,0 +1,32 @@
+{{ define "main" }}
+{{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" .Title) }}
+<section class="page-hero">
+  <p class="eyebrow">{{ $sectionLabel }}</p>
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}
+    <p class="page-hero__lead">{{ . }}</p>
+  {{ else }}
+    {{ with .Content }}
+      <div class="page-hero__lead">{{ . }}</div>
+    {{ end }}
+  {{ end }}
+</section>
+
+{{ $pages := .Pages.ByDate.Reverse }}
+{{ if gt (len $pages) 0 }}
+  {{ $paginator := .Paginate $pages }}
+  <section class="surface">
+    <div class="card-grid">
+      {{ range $paginator.Pages }}
+        {{ partial "article-card.html" . }}
+      {{ end }}
+    </div>
+  </section>
+  {{ partial "pager.html" $paginator }}
+{{ else }}
+  <section class="surface empty-state">
+    <h2>这里暂时还没有内容</h2>
+    <p>你可以先用 Hugo 新建一篇文章，然后继续写你的 Go 学习记录。</p>
+  </section>
+{{ end }}
+{{ end }}

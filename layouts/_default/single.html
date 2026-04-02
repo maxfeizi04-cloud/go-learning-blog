@@ -1,0 +1,61 @@
+{{ define "main" }}
+{{ $hasToc := and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0) }}
+{{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" (.Section | humanize)) }}
+<article class="article-shell{{ if $hasToc }} article-shell--with-toc{{ else }} article-shell--solo{{ end }}">
+  <header class="article-head">
+    <p class="eyebrow">{{ $sectionLabel }}</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Summary }}
+      <p class="article-head__summary">{{ . }}</p>
+    {{ end }}
+    <div class="article-meta">
+      <span>{{ .Date.Format site.Params.dateFormat }}</span>
+      <span>{{ .ReadingTime }} 分钟阅读</span>
+      {{ with .Params.series }}
+        <span>系列：{{ index . 0 }}</span>
+      {{ end }}
+    </div>
+    {{ with .Params.tags }}
+      <div class="tag-row">
+        {{ range . }}
+          <a class="tag-pill" href="{{ (printf "/tags/%s/" (. | urlize)) | relURL }}">#{{ . }}</a>
+        {{ end }}
+      </div>
+    {{ end }}
+  </header>
+
+  <div class="article-layout{{ if $hasToc }} article-layout--with-toc{{ end }}">
+    {{ if $hasToc }}
+      <aside class="article-toc">
+        <div class="toc-card">
+          <h2>目录</h2>
+          {{ .TableOfContents }}
+        </div>
+      </aside>
+    {{ end }}
+
+    <div class="article-body surface{{ if not $hasToc }} article-body--narrow{{ end }}">
+      <div class="prose">
+        {{ .Content }}
+      </div>
+    </div>
+  </div>
+
+  <nav class="article-nav{{ if not $hasToc }} article-nav--narrow{{ end }}">
+    {{ with .PrevInSection }}
+      <a class="article-nav__item" href="{{ .RelPermalink }}">
+        <span>上一篇</span>
+        <strong>{{ .Title }}</strong>
+      </a>
+    {{ end }}
+    {{ with .NextInSection }}
+      <a class="article-nav__item article-nav__item--next" href="{{ .RelPermalink }}">
+        <span>下一篇</span>
+        <strong>{{ .Title }}</strong>
+      </a>
+    {{ end }}
+  </nav>
+
+  {{ partial "comments.html" . }}
+</article>
+{{ end }}

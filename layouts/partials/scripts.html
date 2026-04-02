@@ -1,0 +1,4 @@
+{{ $searchJS := resources.Get "js/search.js" | minify | fingerprint }}
+{{ $uiJS := resources.Get "js/ui-enhancements.js" | minify | fingerprint }}
+<script src="{{ $searchJS.RelPermalink }}" integrity="{{ $searchJS.Data.Integrity }}" defer></script>
+<script src="{{ $uiJS.RelPermalink }}" integrity="{{ $uiJS.Data.Integrity }}" defer></script>

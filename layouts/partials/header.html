@@ -1,0 +1,39 @@
+{{ $searchVariant := "compact" }}
+{{ if .IsPage }}
+  {{ $searchVariant = "icon" }}
+{{ end }}
+{{ if or .IsHome (eq .Section "search") }}
+  {{ $searchVariant = "full" }}
+{{ end }}
+{{ $currentPath := .RelPermalink }}
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="{{ "/" | relURL }}">
+      <span class="brand__mark">go</span>
+      <span class="brand__text">
+        <strong>{{ site.Title }}</strong>
+        <small>{{ site.Params.siteIntro }}</small>
+      </span>
+    </a>
+
+    <div class="site-header__actions">
+      {{ partial "search-box.html" (dict "id" "header-search" "variant" $searchVariant) }}
+
+      <nav class="nav">
+        {{ range site.Menus.main }}
+          {{ $menuPath := .URL | relURL }}
+          {{ $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (eq $currentPath $menuPath) }}
+          {{ if and (not $isActive) (ne $menuPath "/") }}
+            {{ $isActive = hasPrefix $currentPath $menuPath }}
+          {{ end }}
+          <a
+            class="nav__link{{ if $isActive }} nav__link--active{{ end }}"
+            href="{{ $menuPath }}"
+          >
+            {{ .Name }}
+          </a>
+        {{ end }}
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,56 @@
+{{ $id := .id | default "site-search" }}
+{{ $variant := .variant | default "full" }}
+{{ $placeholder := cond (eq $variant "compact") "搜索文章" "搜索 Go 知识点、文章、标签" }}
+{{ if eq $variant "icon" }}
+  {{ $placeholder = "搜索文章" }}
+{{ end }}
+{{ $buttonText := cond (eq $variant "compact") "搜" "搜索" }}
+{{ if eq $variant "icon" }}
+  {{ $buttonText = "搜" }}
+{{ end }}
+<div class="site-search site-search--{{ $variant }}" data-search-root>
+  {{ if eq $variant "icon" }}
+    <button
+      class="site-search__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="{{ $id }}-panel"
+      aria-label="打开搜索"
+      data-search-toggle
+    >
+      <svg class="site-search__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-2a8 8 0 1 1 4.94 14.29l4.13 4.12a1 1 0 0 1-1.41 1.42l-4.13-4.13A8 8 0 0 1 10.5 2.5Z" fill="currentColor"/>
+      </svg>
+    </button>
+  {{ end }}
+
+  <div
+    id="{{ $id }}-panel"
+    class="site-search__panel{{ if eq $variant "icon" }} site-search__panel--floating{{ end }}"
+    data-search-panel
+    {{ if eq $variant "icon" }}hidden{{ end }}
+  >
+    <form class="site-search__form" action="{{ "search/" | relURL }}" method="get" role="search">
+      <label class="sr-only" for="{{ $id }}">搜索博客</label>
+      <input
+        id="{{ $id }}"
+        class="site-search__input"
+        type="search"
+        name="q"
+        placeholder="{{ $placeholder }}"
+        autocomplete="off"
+        spellcheck="false"
+        enterkeyhint="search"
+        data-search-input
+      >
+      <button class="site-search__button" type="submit">{{ $buttonText }}</button>
+    </form>
+
+    <div class="site-search__dropdown" data-search-dropdown hidden>
+      <p class="site-search__status" data-search-status>输入关键词开始搜索，支持单字。</p>
+      <div class="search-history" data-search-history hidden></div>
+      <div class="site-search__results" data-search-results></div>
+      <a class="site-search__more" href="{{ "search/" | relURL }}" data-search-more hidden>查看全部结果</a>
+    </div>
+  </div>
+</div>

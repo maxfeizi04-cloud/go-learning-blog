@@ -1,0 +1,24 @@
+{{- $kind := lower (printf "%v" (.kind | default "")) -}}
+{{- $value := lower (printf "%v" (.value | default "")) -}}
+{{- $fallback := printf "%v" (.fallback | default (.value | default "")) -}}
+{{- $label := $fallback -}}
+
+{{- if eq $kind "section" -}}
+  {{- if eq $value "posts" -}}
+    {{- $label = "学习记录" -}}
+  {{- else if eq $value "snippets" -}}
+    {{- $label = "代码片段" -}}
+  {{- else if eq $value "search" -}}
+    {{- $label = "搜索" -}}
+  {{- else if eq $value "about" -}}
+    {{- $label = "关于" -}}
+  {{- end -}}
+{{- else if eq $kind "taxonomy" -}}
+  {{- if or (eq $value "tag") (eq $value "tags") -}}
+    {{- $label = "标签" -}}
+  {{- else if eq $value "series" -}}
+    {{- $label = "系列" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $label -}}
