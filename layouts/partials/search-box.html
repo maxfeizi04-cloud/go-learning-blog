@@ -1,8 +1,8 @@
 {{ $id := .id | default "site-search" }}
 {{ $variant := .variant | default "full" }}
-{{ $placeholder := cond (eq $variant "compact") "搜索文章" "搜索 Go 知识点、文章、标签" }}
+{{ $placeholder := cond (eq $variant "compact") "搜索 Go / 算法" "搜索 Go、算法、标签" }}
 {{ if eq $variant "icon" }}
-  {{ $placeholder = "搜索文章" }}
+  {{ $placeholder = "搜索 Go / 算法" }}
 {{ end }}
 {{ $buttonText := cond (eq $variant "compact") "搜" "搜索" }}
 {{ if eq $variant "icon" }}

@@ -32,8 +32,6 @@
 - `hugo.toml`
 - `content/about/index.md`
 
-如果你暂时只想先发布到 Cloudflare 默认域名，`baseURL` 可以先写成未来准备长期使用的正式域名，后面再绑定；也可以先保留 Pages 域名方案，但不要一直留着 `blog.example.com` 这种默认占位值。
-
 ## 2. 准备仓库
 
 如果你还没有第一次提交，可以在项目根目录执行：
@@ -96,49 +94,30 @@ Build output directory: public
 HUGO_VERSION=0.159.2
 ```
 
-如果后面接入评论、统计或别的第三方脚本，再按需要补环境变量。
-
 ## 6. 首次发布后检查
 
-Cloudflare 首次发布成功后，建议至少检查这些页面：
+Cloudflare 首次发布成功后，建议立刻跑一遍：
 
-- 首页
-- `/posts/`
-- 一篇文章详情页
-- `/tags/`
-- `/search/`
-- `/index.xml`
-- 404 页面
+- [上线后检查清单](post-launch-checklist.md)
 
-同时重点确认：
+至少确认：
 
 - 中文内容没有乱码
 - 搜索正常返回结果
 - 分页、标签和导航链接都可点击
-- 页面的 canonical / OG 信息不是默认占位地址
+- 页面的 canonical / OG 信息不是占位地址
 
 ## 7. 绑定自定义域名
 
-如果你有自己的域名，可以在 Pages 项目里添加 Custom Domain。
+如果你要继续走正式域名，直接看：
 
-常见做法：
-
-- `blog.yourdomain.com`
-
-绑定成功后，再回头确认一次：
-
-- `baseURL` 已经改成正式域名
-- 页面里的链接和分享卡片都指向正式域名
+- [自定义域名配置说明](custom-domain-cloudflare-pages.md)
 
 ## 8. 打开评论
 
-如果你想开启评论区：
+如果你想开启评论区，直接看：
 
-1. 在 GitHub 仓库开启 Discussions。
-2. 到 giscus 配置页生成参数。
-3. 把参数填进 `hugo.toml` 的 `[params.giscus]`。
-4. 把 `enabled` 改成 `true`。
-5. 重新运行一次 `./scripts/check-site.ps1`，再推送部署。
+- [giscus 接入说明](giscus-setup.md)
 
 ## 9. 后续更新方式
 

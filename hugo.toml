@@ -1,7 +1,7 @@
 baseURL = "https://go-learning-blog.pages.dev/"
 languageCode = "zh-cn"
 defaultContentLanguage = "zh-cn"
-title = "Go 学习手记"
+title = "Go 与算法手记"
 hasCJKLanguage = true
 enableRobotsTXT = true
 summaryLength = 120
@@ -40,10 +40,10 @@ term = ["HTML", "RSS"]
   ordered = false
 
 [params]
-description = "记录 Go 学习、工程实践、性能优化和踩坑复盘。"
+description = "记录 Go 学习、算法题解、工程实践、性能优化和踩坑复盘。"
 author = "Feizi"
-siteIntro = "把 Go 学习过程沉淀成可复用的知识库。"
-sitePitch = "这里主要记录 Go 基础、并发模型、Web 开发、工程化实践和真实踩坑。"
+siteIntro = "把 Go 工程学习与算法训练沉淀成可复用的知识库。"
+sitePitch = "这里主要记录 Go 基础、并发模型、Web 开发、工程化实践，以及数组、树、图、动态规划等算法题解与刷题复盘。"
 email = "orb_wy_yzz@163.com"
 github = "https://github.com/maxfeizi04-cloud"
 dateFormat = "2006-01-02"
@@ -51,9 +51,9 @@ mainSections = ["posts", "snippets"]
 
   [params.giscus]
   enabled = false
-  repo = ""
-  repoId = ""
-  category = ""
+  repo = "maxfeizi04-cloud/go-learning-blog"
+  repoId = "R_kgDOR33oYw"
+  category = "Announcements"
   categoryId = ""
   mapping = "pathname"
   strict = "0"

@@ -1,12 +1,13 @@
 # Go Learning Blog
 
-一个适合记录 Go 学习过程、踩坑总结和代码片段的 Hugo 个人博客骨架。
+一个适合记录 Go 学习过程、算法刷题复盘、踩坑总结和代码片段的 Hugo 个人博客骨架。
 
 ## 你现在拿到的内容
 
 - 自定义 Hugo 布局，不依赖外部主题
 - 首页、列表页、文章页、标签页、关于页、404 页面
 - `posts` / `snippets` 两种内容模型
+- Go 学习记录 + 算法题解双主线
 - `tags` / `series` 分类
 - 代码高亮、目录、上一篇/下一篇
 - 搜索、分页和本地写作脚本
@@ -63,10 +64,16 @@ cd D:\Codex\go-learning-blog
 
 这个脚本会做一次干净的最小化构建，并把输出写到 `.site-check/`，同时检查常见占位配置是否还残留。
 
-新建完整学习文章：
+新建完整 Go / 工程学习文章：
 
 ```powershell
 .\scripts\new-post.ps1 -Title "理解 channel 的关闭语义" -Tags channel,concurrency -Series "Go 并发与控制流"
+```
+
+新建算法题解文章：
+
+```powershell
+.\scripts\new-algo-post.ps1 -Title "两数之和：从暴力枚举到哈希表" -Tags array,hash-table -Difficulty easy
 ```
 
 新建代码片段：
@@ -75,53 +82,17 @@ cd D:\Codex\go-learning-blog
 .\scripts\new-snippet.ps1 -Title "用 benchstat 比较基准测试结果" -Tags testing,performance
 ```
 
-## 发布前建议先做的事
+## 内容建议
 
-- 把 `hugo.toml` 里的 `baseURL`、`author`、`email`、`github` 换成你自己的
-- 完善 `content/about/index.md`
-- 运行一次 `./scripts/check-site.ps1`
-
-## 部署到 Cloudflare Pages
-
-完整步骤见：
-
-- `docs/deploy-cloudflare-pages.md`
-
-如果你暂时还没有自定义域名，可以先用：
-
-```text
-Build command: hugo --gc --minify --cleanDestinationDir -b $CF_PAGES_URL
-Build output directory: public
-Environment variable: HUGO_VERSION=0.159.2
-```
-
-如果你已经确定正式域名并且 `baseURL` 已经写成正式地址，则更推荐：
-
-```text
-Build command: hugo --gc --minify --cleanDestinationDir
-Build output directory: public
-Environment variable: HUGO_VERSION=0.159.2
-```
-
-`--cleanDestinationDir` 能减少旧分页、旧标签页或旧路由残留在输出目录里的风险。
-
-## 开启 giscus 评论
-
-编辑 `hugo.toml`，把下面配置补全并开启：
-
-```toml
-[params.giscus]
-enabled = true
-repo = "yourname/your-repo"
-repoId = "..."
-category = "Announcements"
-categoryId = "..."
-```
-
-## 建议的写作习惯
-
-- `posts` 放完整学习文章
-- `snippets` 放短技巧和代码片段
-- 用 `series` 串起系列内容
+- `posts` 放完整学习文章、算法题解、工程实践总结
+- `snippets` 放短技巧、算法模板、代码片段和命令备忘
+- 用 `series` 串起长期主题，例如 `Go 并发与控制流`、`算法与数据结构`
 - 每篇文章写 `summary`
 - 图片尽量跟文章一起放在 page bundle 目录里
+
+## 部署与上线相关文档
+
+- [Cloudflare Pages 部署说明](docs/deploy-cloudflare-pages.md)
+- [上线后检查清单](docs/post-launch-checklist.md)
+- [自定义域名配置说明](docs/custom-domain-cloudflare-pages.md)
+- [giscus 接入说明](docs/giscus-setup.md)

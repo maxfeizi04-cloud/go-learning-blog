@@ -1,10 +1,11 @@
 {{ define "main" }}
 {{ $posts := where site.RegularPages.ByDate.Reverse "Section" "posts" }}
 {{ $snippets := where site.RegularPages.ByDate.Reverse "Section" "snippets" }}
+{{ $algoPosts := where $posts "Params.isAlgorithm" true }}
 
 <section class="hero">
   <div class="hero__copy">
-    <p class="eyebrow">Go 学习手记</p>
+    <p class="eyebrow">Go + 算法学习</p>
     <h1>{{ site.Title }}</h1>
     <p class="hero__lead">{{ site.Params.siteIntro }}</p>
     <p class="hero__body">{{ site.Params.sitePitch }}</p>
@@ -17,18 +18,18 @@
   <div class="hero__panel">
     <div class="metric-card">
       <span class="metric-card__label">内容结构</span>
-      <strong>学习记录 + 代码片段</strong>
-      <p>长文用于沉淀完整理解，短笔记用于快速复盘和备忘。</p>
+      <strong>Go 进阶 + 算法题解</strong>
+      <p>长文沉淀完整理解，短笔记用于模板整理、命令备忘和刷题复盘。</p>
     </div>
     <div class="metric-card">
       <span class="metric-card__label">学习主线</span>
-      <strong>并发、工程化、性能</strong>
-      <p>围绕真实开发中最常遇到的 Go 能力逐步积累。</p>
+      <strong>工程化、并发、数据结构</strong>
+      <p>一边构建 Go 工程能力，一边用算法训练边界意识和分析能力。</p>
     </div>
     <div class="metric-card">
       <span class="metric-card__label">更新方式</span>
-      <strong>Markdown 写作</strong>
-      <p>所有内容都保存在仓库里，方便版本管理和持续发布。</p>
+      <strong>题解复盘 + 实战记录</strong>
+      <p>把刷题思路、性能实验和真实踩坑都沉淀到同一个知识库里。</p>
     </div>
   </div>
 </section>
@@ -37,7 +38,7 @@
   <div class="section-head">
     <div>
       <p class="eyebrow">最新更新</p>
-      <h2>最新学习记录</h2>
+      <h2>Go 与算法最新学习记录</h2>
     </div>
     <a class="text-link" href="{{ "posts/" | relURL }}">查看全部</a>
   </div>
@@ -49,11 +50,29 @@
   </div>
 </section>
 
+{{ if gt (len $algoPosts) 0 }}
+<section class="surface">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">算法专题</p>
+      <h2>算法学习与题解复盘</h2>
+    </div>
+    <a class="text-link" href="{{ "posts/" | relURL }}">继续查看</a>
+  </div>
+
+  <div class="card-grid">
+    {{ range first 3 $algoPosts }}
+      {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+
 <section class="surface surface--muted">
   <div class="section-head">
     <div>
       <p class="eyebrow">短笔记</p>
-      <h2>短笔记与代码片段</h2>
+      <h2>Go 技巧、算法模板与代码片段</h2>
     </div>
     <a class="text-link" href="{{ "snippets/" | relURL }}">查看更多</a>
   </div>
