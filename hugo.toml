@@ -14,6 +14,7 @@ posts = "/posts/:slug/"
 snippets = "/snippets/:slug/"
 algorithms = "/algorithms/"
 go-modules = "/go-modules/"
+roadmap = "/roadmap/"
 
 [taxonomies]
 tag = "tags"
@@ -25,6 +26,26 @@ home = ["HTML", "RSS", "JSON"]
 section = ["HTML", "RSS"]
 taxonomy = ["HTML", "RSS"]
 term = ["HTML", "RSS"]
+
+[related]
+includeNewer = true
+threshold = 20
+
+  [[related.indices]]
+  name = "series"
+  weight = 120
+
+  [[related.indices]]
+  name = "tags"
+  weight = 100
+
+  [[related.indices]]
+  name = "difficulties"
+  weight = 70
+
+  [[related.indices]]
+  name = "section"
+  weight = 40
 
 [markup]
   [markup.highlight]
@@ -87,16 +108,21 @@ url = "/go-modules/"
 weight = 4
 
 [[menu.main]]
+name = "路线图"
+url = "/roadmap/"
+weight = 5
+
+[[menu.main]]
 name = "代码片段"
 url = "/snippets/"
-weight = 5
+weight = 6
 
 [[menu.main]]
 name = "标签"
 url = "/tags/"
-weight = 6
+weight = 7
 
 [[menu.main]]
 name = "关于"
 url = "/about/"
-weight = 7
+weight = 8

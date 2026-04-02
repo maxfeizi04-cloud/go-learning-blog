@@ -1,0 +1,19 @@
+{{ if eq .Section "posts" }}
+  {{ $related := where (site.RegularPages.Related .) "RelPermalink" "ne" .RelPermalink }}
+  {{ $related = first 3 $related }}
+  {{ if gt (len $related) 0 }}
+    <section class="surface related-block{{ if not (and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0)) }} related-block--narrow{{ end }}">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">继续阅读</p>
+          <h2>相关推荐</h2>
+        </div>
+      </div>
+      <div class="card-grid card-grid--compact">
+        {{ range $related }}
+          {{ partial "article-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}

@@ -18,6 +18,8 @@
     {{- $label = "模块专题" -}}
   {{- else if eq $value "go-engineering" -}}
     {{- $label = "Go 工程" -}}
+  {{- else if eq $value "roadmap" -}}
+    {{- $label = "路线图" -}}
   {{- end -}}
 {{- else if eq $kind "taxonomy" -}}
   {{- if or (eq $value "tag") (eq $value "tags") -}}

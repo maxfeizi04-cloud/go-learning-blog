@@ -1,0 +1,95 @@
+{{ define "main" }}
+{{ $posts := where site.RegularPages.ByDate.Reverse "Section" "posts" }}
+{{ $algoPosts := where $posts "Params.isAlgorithm" true }}
+{{ $goPosts := where $posts "Params.isAlgorithm" "ne" true }}
+{{ $modulePosts := where $posts "Params.series" "intersect" (slice "Go 模块与依赖管理") }}
+<section class="page-hero">
+  <p class="eyebrow">路线图</p>
+  <h1>{{ .Title }}</h1>
+  <p class="page-hero__lead">{{ .Description }}</p>
+</section>
+
+<section class="roadmap-shell">
+  <section class="surface roadmap-group">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">第一条线</p>
+        <h2>Go 工程能力</h2>
+      </div>
+      <a class="text-link" href="{{ "go-engineering/" | relURL }}">进入专题</a>
+    </div>
+    <div class="roadmap-list">
+      <a class="roadmap-item" href="{{ "series/go-并发与控制流/" | relURL }}">
+        <strong>Go 并发与控制流</strong>
+        <p>围绕 goroutine、channel、context 和调度模型打基础。</p>
+        <span>{{ len (where $goPosts "Params.series" "intersect" (slice "Go 并发与控制流")) }} 篇文章</span>
+      </a>
+      <a class="roadmap-item" href="{{ "series/go-工程化实践/" | relURL }}">
+        <strong>Go 工程化实践</strong>
+        <p>补齐错误处理、项目组织、依赖升级和真实工程问题。</p>
+        <span>{{ len (where $goPosts "Params.series" "intersect" (slice "Go 工程化实践")) }} 篇文章</span>
+      </a>
+      <a class="roadmap-item" href="{{ "go-modules/" | relURL }}">
+        <strong>Go 模块与依赖管理</strong>
+        <p>集中复习 go.mod、go.sum、replace、go work 等模块主题。</p>
+        <span>{{ len $modulePosts }} 篇文章</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="surface roadmap-group">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">第二条线</p>
+        <h2>算法训练路线</h2>
+      </div>
+      <a class="text-link" href="{{ "algorithms/" | relURL }}">进入专题</a>
+    </div>
+    <div class="roadmap-list">
+      <a class="roadmap-item" href="{{ "tags/array/" | relURL }}">
+        <strong>数组与哈希</strong>
+        <p>适合建立题感，练习查找、计数、映射和下标关系。</p>
+        <span>{{ len (where $algoPosts "Params.tags" "intersect" (slice "array")) }} 篇文章</span>
+      </a>
+      <a class="roadmap-item" href="{{ "tags/binary-search/" | relURL }}">
+        <strong>二分查找</strong>
+        <p>重点训练边界定义、循环不变量和条件收缩。</p>
+        <span>{{ len (where $algoPosts "Params.tags" "intersect" (slice "binary-search")) }} 篇文章</span>
+      </a>
+      <a class="roadmap-item" href="{{ "tags/monotonic-stack/" | relURL }}">
+        <strong>单调栈</strong>
+        <p>适合掌握“下一个更大元素”这类典型结构题。</p>
+        <span>{{ len (where $algoPosts "Params.tags" "intersect" (slice "monotonic-stack")) }} 篇文章</span>
+      </a>
+      <a class="roadmap-item" href="{{ "tags/dynamic-programming/" | relURL }}">
+        <strong>动态规划</strong>
+        <p>从状态定义、转移方程到滚动优化，逐步建立框架。</p>
+        <span>{{ len (where $algoPosts "Params.tags" "intersect" (slice "dynamic-programming")) }} 篇文章</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="surface roadmap-group">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">第三条线</p>
+        <h2>当前建议的学习顺序</h2>
+      </div>
+    </div>
+    <div class="roadmap-list">
+      <div class="roadmap-item roadmap-item--static">
+        <strong>先打基础</strong>
+        <p>先把 Go 并发、错误处理和模块管理补齐，再写更多工程文章。</p>
+      </div>
+      <div class="roadmap-item roadmap-item--static">
+        <strong>再做算法专题训练</strong>
+        <p>优先补数组、二分、单调栈、动态规划，让题解体系更成型。</p>
+      </div>
+      <div class="roadmap-item roadmap-item--static">
+        <strong>最后回到工程复盘</strong>
+        <p>把算法训练里形成的边界意识，继续带回 Go 工程实践里。</p>
+      </div>
+    </div>
+  </section>
+</section>
+{{ end }}
