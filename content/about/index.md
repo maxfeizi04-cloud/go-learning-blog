@@ -2,10 +2,10 @@
 title = "关于"
 date = 2026-04-02T10:00:00+08:00
 draft = false
-summary = "这个博客的写作方向、内容结构和联系方式。"
+summary = "这个博客的写作方向、内容结构、作者信息和联系方式。"
 +++
 
-你好，这里是一个持续记录 Go 学习过程的个人博客。
+你好，我是 Feizi，这里是一个持续记录 Go 学习过程的个人博客。
 
 我不想只把 Go 当成“看过就算”的知识点集合，所以会尽量把每一次理解、实验、踩坑和复盘整理成可以回头复用的内容。
 
@@ -41,7 +41,8 @@ summary = "这个博客的写作方向、内容结构和联系方式。"
 
 如果你也在学 Go，或者对这里的某篇文章有不同理解，欢迎交流：
 
-- GitHub: [maxfeizi04-cloud/go-learning-blog](https://github.com/maxfeizi04-cloud/go-learning-blog)
+- GitHub: [maxfeizi04-cloud](https://github.com/maxfeizi04-cloud)
+- 项目源码: [go-learning-blog](https://github.com/maxfeizi04-cloud/go-learning-blog)
 - Email: [orb_wy_yzz@163.com](mailto:orb_wy_yzz@163.com)
 
 ## 现在的状态
