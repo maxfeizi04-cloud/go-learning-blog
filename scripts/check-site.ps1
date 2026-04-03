@@ -80,6 +80,15 @@ if ($config -match '(?m)^\s*enabled\s*=\s*false\s*$') {
 
 $destinationPath = Resolve-SafePath $workspace $Destination
 $hugoExe = Get-HugoExecutable
+$frontMatterScript = Resolve-SafePath $workspace 'scripts/validate-frontmatter.ps1'
+
+Write-Host 'Running front matter validation...' -ForegroundColor Cyan
+try {
+  & $frontMatterScript
+}
+catch {
+  throw 'Front matter validation failed during preflight check.'
+}
 
 Write-Host 'Running clean build check...' -ForegroundColor Cyan
 & $hugoExe '--cleanDestinationDir' '--gc' '--minify' '--destination' $destinationPath | Out-Host
@@ -104,7 +113,7 @@ if ($notes.Count -gt 0) {
   Write-Host ''
   Write-Host 'Notes:' -ForegroundColor Yellow
   foreach ($note in $notes) {
-    Write-Host "- $note" -ForegroundColor Yellow
+    Write-Host ('- ' + $note) -ForegroundColor Yellow
   }
 }
 
@@ -112,7 +121,7 @@ if ($blockingIssues.Count -gt 0) {
   Write-Host ''
   Write-Host 'Before going live, fix these items:' -ForegroundColor Red
   foreach ($issue in $blockingIssues) {
-    Write-Host "- $issue" -ForegroundColor Red
+    Write-Host ('- ' + $issue) -ForegroundColor Red
   }
   exit 1
 }

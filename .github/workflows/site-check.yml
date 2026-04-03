@@ -23,6 +23,10 @@ jobs:
       - name: Verify Hugo version
         run: hugo version
 
+      - name: Validate front matter
+        shell: pwsh
+        run: ./scripts/validate-frontmatter.ps1
+
       - name: Build site
         run: hugo --gc --minify --cleanDestinationDir
 
