@@ -1,7 +1,7 @@
 +++
 title = "Go 语言接口详解：从方法集到动态分派"
 date = 2026-04-03T21:30:00+08:00
-draft = true
+draft = false
 summary = "从接口的本质、方法集、动态类型和值，到 type assertion 与 typed nil，一次梳理 Go interface 真正容易混淆的语义。读完之后，再看“为什么它实现了接口”“为什么这里不是 nil”会更有把握。"
 tags = ["interface", "language", "type-system"]
 series = ["Go 语言核心机制"]
