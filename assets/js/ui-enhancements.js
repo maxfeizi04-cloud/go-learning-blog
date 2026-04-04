@@ -85,6 +85,15 @@
     let activeId = '';
     let ticking = false;
 
+    function shouldKeepActiveTocLinkInView() {
+      const tocAside = toc.closest('.article-toc');
+      if (!tocAside) {
+        return false;
+      }
+
+      return window.getComputedStyle(tocAside).position === 'sticky';
+    }
+
     function clearTocState() {
       for (const link of links) {
         link.classList.remove('is-active', 'is-trail');
@@ -127,7 +136,9 @@
         isPrimary = false;
       }
 
-      currentEntry.link.scrollIntoView({ block: 'nearest' });
+      if (shouldKeepActiveTocLinkInView()) {
+        currentEntry.link.scrollIntoView({ block: 'nearest' });
+      }
     }
 
     function updateActiveHeading() {
