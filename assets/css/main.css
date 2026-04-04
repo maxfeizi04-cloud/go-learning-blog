@@ -748,6 +748,14 @@ pre {
     grid-template-columns: 1fr;
   }
 
+  .article-layout--with-toc .article-body {
+    order: 1;
+  }
+
+  .article-layout--with-toc .article-toc {
+    order: 2;
+  }
+
   .article-toc {
     position: static;
   }
@@ -1575,7 +1583,13 @@ pre {
 
 @media (max-width: 980px) {
   .site-search--icon {
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .site-search--icon.site-search--open {
     width: 100%;
+    align-self: stretch;
   }
 
   .site-search--icon .site-search__panel--floating {
