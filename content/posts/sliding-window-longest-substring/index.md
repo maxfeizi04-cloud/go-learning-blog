@@ -2,7 +2,7 @@
 title = "滑动窗口入门：无重复字符的最长子串"
 date = 2026-04-03T11:00:00+08:00
 draft = false
-summary = "用经典滑动窗口题目建立“左边缩、右边扩”的基本思路，重点理解窗口何时失效、何时更新答案。"
+summary = "用经典滑动窗口题目建立“左边收缩、右边扩张”的基本思路，重点理解窗口何时失效、何时更新答案。"
 tags = ["algorithm", "array", "hash-table", "sliding-window", "leetcode"]
 series = ["算法与数据结构"]
 slug = "sliding-window-longest-substring"
@@ -11,6 +11,13 @@ difficulty = "medium"
 difficulties = ["medium"]
 source = "LeetCode"
 problemId = "3"
+
+[visualization]
+key = "sliding-window"
+title = "窗口扩张与收缩"
+description = "看右指针如何扩张窗口，以及左指针在字符重复时如何收缩窗口。"
+sampleLabel = "s = \"abcabcbb\""
+string = "abcabcbb"
 +++
 
 ## 题目

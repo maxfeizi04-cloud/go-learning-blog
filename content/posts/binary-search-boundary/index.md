@@ -11,6 +11,15 @@ difficulty = "medium"
 difficulties = ["medium"]
 source = "LeetCode"
 problemId = "704"
+
+[visualization]
+key = "binary-search"
+title = "区间收缩过程"
+description = "沿着 left、mid、right 的变化观察二分查找如何不断排除不可能的区间。"
+sampleLabel = "nums = [1, 3, 5, 7, 9, 11, 13], target = 11"
+numbers = [1, 3, 5, 7, 9, 11, 13]
+target = 11
+interval = "closed"
 +++
 
 ## 题目

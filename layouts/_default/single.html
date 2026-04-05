@@ -2,6 +2,7 @@
 {{ $hasToc := and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0) }}
 {{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" (.Section | humanize)) }}
 {{ $isAlgorithm := eq .Params.isAlgorithm true }}
+{{ $hasVisualization := and $isAlgorithm .Params.visualization }}
 {{ $difficulty := .Params.difficulty | default "" }}
 {{ $difficultyLabel := "" }}
 {{ if $difficulty }}
@@ -34,10 +35,13 @@
         <span>题号：{{ $problemLabel }}</span>
       {{ end }}
     </div>
-    {{ if or $isAlgorithm $problemLabel $difficulty }}
+    {{ if or $isAlgorithm $problemLabel $difficulty $hasVisualization }}
       <div class="article-badge-row">
         {{ if $isAlgorithm }}
           <span class="badge badge--algo">算法题解</span>
+        {{ end }}
+        {{ if $hasVisualization }}
+          <span class="badge badge--viz">可视化</span>
         {{ end }}
         {{ if $problemLabel }}
           <span class="badge badge--source">{{ $problemLabel }}</span>
@@ -67,6 +71,9 @@
     {{ end }}
 
     <div class="article-body surface{{ if not $hasToc }} article-body--narrow{{ end }}">
+      {{ if $hasVisualization }}
+        {{ partial "algorithm-visualizer.html" . }}
+      {{ end }}
       <div class="prose">
         {{ .Content }}
       </div>

@@ -2,6 +2,7 @@ public/
 resources/_gen/
 .hugo_build.lock
 .site-check/
+.site-check-visualizer/
 .codex-run/
 .DS_Store
 Thumbs.db

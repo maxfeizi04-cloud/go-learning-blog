@@ -1,4 +1,6 @@
 {{ $searchJS := resources.Get "js/search.js" | minify | fingerprint }}
 {{ $uiJS := resources.Get "js/ui-enhancements.js" | minify | fingerprint }}
+{{ $algorithmVisualizationJS := resources.Get "js/algorithm-visualizer.js" | minify | fingerprint }}
 <script src="{{ $searchJS.RelPermalink }}" integrity="{{ $searchJS.Data.Integrity }}" defer></script>
 <script src="{{ $uiJS.RelPermalink }}" integrity="{{ $uiJS.Data.Integrity }}" defer></script>
+<script src="{{ $algorithmVisualizationJS.RelPermalink }}" integrity="{{ $algorithmVisualizationJS.Data.Integrity }}" defer></script>

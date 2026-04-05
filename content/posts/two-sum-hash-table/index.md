@@ -11,6 +11,14 @@ difficulty = "easy"
 difficulties = ["easy"]
 source = "LeetCode"
 problemId = "1"
+
+[visualization]
+key = "two-sum"
+title = "哈希表扫描过程"
+description = "用经典样例观察补数检查和哈希表写入各发生在什么时候。"
+sampleLabel = "nums = [2, 7, 11, 15], target = 9"
+numbers = [2, 7, 11, 15]
+target = 9
 +++
 
 ## 题目

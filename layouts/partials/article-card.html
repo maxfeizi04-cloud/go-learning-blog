@@ -1,4 +1,5 @@
 {{ $isAlgorithm := eq .Params.isAlgorithm true }}
+{{ $hasVisualization := and $isAlgorithm .Params.visualization }}
 {{ $difficulty := .Params.difficulty | default "" }}
 {{ $difficultyLabel := "" }}
 {{ if $difficulty }}
@@ -20,10 +21,13 @@
       <span>{{ .Date.Format site.Params.dateFormat }}</span>
       <span>{{ .ReadingTime }} 分钟</span>
     </div>
-    {{ if or $isAlgorithm $problemLabel $difficulty }}
+    {{ if or $isAlgorithm $problemLabel $difficulty $hasVisualization }}
       <div class="article-card__badges">
         {{ if $isAlgorithm }}
           <span class="badge badge--algo">算法题解</span>
+        {{ end }}
+        {{ if $hasVisualization }}
+          <span class="badge badge--viz">可视化</span>
         {{ end }}
         {{ if $problemLabel }}
           <span class="badge badge--source">{{ $problemLabel }}</span>

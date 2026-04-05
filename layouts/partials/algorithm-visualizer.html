@@ -1,0 +1,62 @@
+{{ $viz := .Params.visualization }}
+{{ $config := dict
+  "key" ($viz.key | default "")
+  "title" ($viz.title | default "算法可视化")
+  "description" ($viz.description | default "用一组小型输入把指针、状态和决策路径逐步展开，便于在读文章时同步观察算法如何推进。")
+  "sampleLabel" ($viz.sampleLabel | default "")
+  "numbers" ($viz.numbers | default (slice))
+  "target" ($viz.target | default nil)
+  "interval" ($viz.interval | default "")
+  "string" ($viz.string | default ($viz.text | default ($viz.s | default "")))
+}}
+<section class="algorithm-visualizer" data-algorithm-visualizer>
+  <div class="algorithm-visualizer__head">
+    <div>
+      <p class="eyebrow">算法可视化</p>
+      <h2>{{ index $config "title" }}</h2>
+      {{ with index $config "description" }}
+        <p class="algorithm-visualizer__intro">{{ . }}</p>
+      {{ end }}
+    </div>
+    {{ with index $config "sampleLabel" }}
+      <p class="algorithm-visualizer__sample">{{ . }}</p>
+    {{ end }}
+  </div>
+
+  <div class="algorithm-visualizer__toolbar">
+    <div class="algorithm-visualizer__actions" role="group" aria-label="算法可视化控制">
+      <button class="algorithm-visualizer__button" type="button" data-action="reset">重置</button>
+      <button class="algorithm-visualizer__button" type="button" data-action="prev">上一步</button>
+      <button class="algorithm-visualizer__button algorithm-visualizer__button--primary" type="button" data-action="play" aria-pressed="false">播放</button>
+      <button class="algorithm-visualizer__button" type="button" data-action="next">下一步</button>
+    </div>
+
+    <label class="algorithm-visualizer__progress">
+      <span data-step-label>步骤 1 / 1</span>
+      <input type="range" min="0" max="0" step="1" value="0" data-progress aria-label="切换到指定步骤">
+    </label>
+  </div>
+
+  <div class="algorithm-visualizer__content">
+    <div class="algorithm-visualizer__board" data-board></div>
+
+    <aside class="algorithm-visualizer__details">
+      <div class="algorithm-visualizer__step">
+        <span class="algorithm-visualizer__step-kicker">当前步骤</span>
+        <h3 data-step-title>准备输入</h3>
+        <p data-step-description aria-live="polite"></p>
+      </div>
+      <div class="algorithm-visualizer__metrics" data-metrics></div>
+    </aside>
+  </div>
+
+  <div class="algorithm-visualizer__rail">
+    <div class="algorithm-visualizer__rail-head">
+      <strong>执行轨迹</strong>
+      <span data-rail-status></span>
+    </div>
+    <ol class="algorithm-visualizer__timeline" data-timeline></ol>
+  </div>
+
+  <script type="application/json" data-algorithm-visualizer-config>{{ jsonify $config | safeHTML }}</script>
+</section>
