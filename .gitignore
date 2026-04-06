@@ -1,8 +1,9 @@
-public/
+﻿public/
 resources/_gen/
 .hugo_build.lock
 .site-check/
 .site-check-visualizer/
+.site-check-search/
 .codex-run/
 .DS_Store
 Thumbs.db

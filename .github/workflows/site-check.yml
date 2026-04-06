@@ -1,4 +1,4 @@
-name: Site Check
+﻿name: Site Check
 
 on:
   push:
@@ -13,6 +13,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Set up Hugo Extended
         uses: peaceiris/actions-hugo@v3
@@ -33,3 +38,7 @@ jobs:
       - name: Run preflight script
         shell: pwsh
         run: ./scripts/check-site.ps1
+
+      - name: Run search UI self-check
+        shell: pwsh
+        run: ./scripts/check-search-ui.ps1

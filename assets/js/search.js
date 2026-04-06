@@ -290,6 +290,55 @@
     return section;
   }
 
+  function buildMetaText(documentItem) {
+    const pieces = [sectionLabel(documentItem.section)];
+    if (documentItem.date) {
+      pieces.push(documentItem.date);
+    }
+    if (documentItem.tags?.length) {
+      pieces.push(documentItem.tags.slice(0, 3).map((tag) => `#${tag}`).join(' '));
+    }
+    return pieces.join(' · ');
+  }
+
+  function buildSnippet(documentItem, query) {
+    const terms = buildHighlightTerms(query);
+    const summary = String(documentItem.summary || '').replace(/\s+/g, ' ').trim();
+    const content = String(documentItem.content || '').replace(/\s+/g, ' ').trim();
+    const sources = [summary, content].filter(Boolean);
+    if (!sources.length) {
+      return '';
+    }
+
+    const lookupTerms = terms.length ? terms : [query.trim()];
+    for (const source of sources) {
+      const lowerSource = source.toLowerCase();
+      let firstIndex = -1;
+      let matchedLength = 0;
+
+      for (const term of lookupTerms) {
+        const normalizedTerm = term.toLowerCase();
+        const index = lowerSource.indexOf(normalizedTerm);
+        if (index >= 0 && (firstIndex === -1 || index < firstIndex)) {
+          firstIndex = index;
+          matchedLength = term.length;
+        }
+      }
+
+      if (firstIndex >= 0) {
+        const radius = source === summary ? 76 : 84;
+        const start = Math.max(0, firstIndex - 28);
+        const end = Math.min(source.length, firstIndex + matchedLength + radius);
+        const prefix = start > 0 ? '…' : '';
+        const suffix = end < source.length ? '…' : '';
+        return prefix + source.slice(start, end).trim() + suffix;
+      }
+    }
+
+    const fallback = summary || content;
+    return fallback.length > 140 ? `${fallback.slice(0, 140).trim()}…` : fallback;
+  }
+
   function appendHighlightedText(target, text, query) {
     const source = String(text || '');
     const terms = buildHighlightTerms(query);
@@ -330,11 +379,19 @@
     link.setAttribute('role', 'option');
     link.setAttribute('aria-selected', 'false');
 
+    const meta = document.createElement('span');
+    meta.className = 'search-result__meta';
+    meta.textContent = buildMetaText(documentItem);
+
     const title = document.createElement('strong');
     title.className = 'search-result__title';
     appendHighlightedText(title, documentItem.title, query);
 
-    link.append(title);
+    const summary = document.createElement('p');
+    summary.className = 'search-result__summary';
+    appendHighlightedText(summary, buildSnippet(documentItem, query), query);
+
+    link.append(meta, title, summary);
     return link;
   }
 
@@ -874,3 +931,4 @@
     void updateSearchPage('');
   }
 })();
+
