@@ -1,0 +1,39 @@
+{{ if not .IsHome }}
+  {{ $homeURL := .Site.Home.RelPermalink }}
+  {{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" (.Section | humanize)) }}
+  {{ $taxonomyLabel := partial "page-label.html" (dict "kind" "taxonomy" "value" .Data.Plural "fallback" (.Data.Plural | humanize)) }}
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb__list">
+      <li class="breadcrumb__item">
+        <a href="{{ $homeURL }}" class="breadcrumb__link">首页</a>
+      </li>
+      {{ if .IsSection }}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__text">{{ $sectionLabel }}</span>
+        </li>
+      {{ else if .IsPage }}
+        {{ if .Parent }}
+          {{ if not .Parent.IsHome }}
+            <li class="breadcrumb__item">
+              <a href="{{ .Parent.RelPermalink }}" class="breadcrumb__link">{{ .Parent.Title }}</a>
+            </li>
+          {{ end }}
+        {{ else if .Section }}
+          <li class="breadcrumb__item">
+            <a href="{{ printf "/%s/" .Section | relURL }}" class="breadcrumb__link">{{ $sectionLabel }}</a>
+          </li>
+        {{ end }}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__text">{{ .Title }}</span>
+        </li>
+      {{ else if .IsTaxonomy }}
+        <li class="breadcrumb__item">
+          <a href="{{ printf "/%s/" (.Data.Plural | urlize) | relURL }}" class="breadcrumb__link">{{ $taxonomyLabel }}</a>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__text">{{ .Title }}</span>
+        </li>
+      {{ end }}
+    </ol>
+  </nav>
+{{ end }}

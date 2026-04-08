@@ -7,9 +7,10 @@
     data-search-index-url="{{ "index.json" | relURL }}"
     data-search-page-url="{{ "search/" | relURL }}"
   >
+    <a class="skip-link" href="#main-content">跳到内容</a>
     <div class="page-frame">
       {{ partial "header.html" . }}
-      <main class="site-main">
+      <main class="site-main" id="main-content" tabindex="-1">
         {{ block "main" . }}{{ end }}
       </main>
       {{ partial "footer.html" . }}

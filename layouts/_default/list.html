@@ -1,5 +1,6 @@
 {{ define "main" }}
 {{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" .Title) }}
+{{ partial "breadcrumb.html" . }}
 <section class="page-hero">
   <p class="eyebrow">{{ $sectionLabel }}</p>
   <h1>{{ .Title }}</h1>

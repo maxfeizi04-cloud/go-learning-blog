@@ -12,13 +12,17 @@
   {{ $image = (.Params.cover | absURL) }}
 {{ end }}
 {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+{{ $criticalCSS := partial "critical-css.html" . }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $description }}">
 <meta name="author" content="{{ site.Params.author }}">
+<meta name="theme-color" content="#0b7a5a">
 <link rel="canonical" href="{{ .Permalink }}">
-<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<style>{{ $criticalCSS | safeCSS }}</style>
+<link rel="preload" as="style" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}"></noscript>
 {{ with .OutputFormats.Get "RSS" }}
 <link rel="alternate" type="application/rss+xml" title="{{ $pageTitle | default site.Title }}" href="{{ .RelPermalink }}">
 {{ end }}

@@ -1,0 +1,38 @@
+{{ $destination := .Destination }}
+{{ $alt := .Text | default "" }}
+{{ $isRemote := or (hasPrefix $destination "http://") (hasPrefix $destination "https://") (hasPrefix $destination "//") }}
+{{ $image := nil }}
+
+{{ if not $isRemote }}
+  {{ $image = .Page.Resources.GetMatch $destination }}
+  {{ if not $image }}
+    {{ $image = .Page.Resources.GetMatch (printf "*%s" (path.Base $destination)) }}
+  {{ end }}
+{{ end }}
+
+{{ if $image }}
+  {{ $rendered := $image }}
+  {{ if gt $rendered.Width 1600 }}
+    {{ $rendered = $rendered.Resize "1600x q82" }}
+  {{ end }}
+  {{ if or (eq $image.MediaType.SubType "jpeg") (eq $image.MediaType.SubType "jpg") (eq $image.MediaType.SubType "png") }}
+    {{ $rendered = $rendered.Resize (printf "%dx webp q82" $rendered.Width) }}
+  {{ end }}
+  <img
+    src="{{ $rendered.RelPermalink }}"
+    alt="{{ $alt }}"
+    width="{{ $rendered.Width }}"
+    height="{{ $rendered.Height }}"
+    loading="lazy"
+    decoding="async"
+    {{ with .Title }}title="{{ . }}"{{ end }}
+  >
+{{ else }}
+  <img
+    src="{{ $destination | safeURL }}"
+    alt="{{ $alt }}"
+    loading="lazy"
+    decoding="async"
+    {{ with .Title }}title="{{ . }}"{{ end }}
+  >
+{{ end }}

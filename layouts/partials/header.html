@@ -6,7 +6,7 @@
   {{ $searchVariant = "full" }}
 {{ end }}
 {{ $currentPath := .RelPermalink }}
-<header class="site-header">
+<header class="site-header" data-site-header>
   <div class="site-header__inner">
     <a class="brand" href="{{ "/" | relURL }}">
       <span class="brand__mark">go</span>
@@ -16,10 +16,33 @@
       </span>
     </a>
 
-    <div class="site-header__actions">
+    <div class="site-header__search site-header__search--desktop">
       {{ partial "search-box.html" (dict "id" "header-search" "variant" $searchVariant) }}
+    </div>
 
-      <nav class="nav">
+    <div class="site-header__controls">
+      <div class="site-header__search site-header__search--mobile">
+        {{ partial "search-box.html" (dict "id" "mobile-header-search" "variant" "icon") }}
+      </div>
+      <button
+        class="site-header__menu-toggle"
+        type="button"
+        hidden
+        aria-expanded="false"
+        aria-controls="site-header-panel"
+        aria-label="打开导航"
+        data-menu-toggle
+      >
+        <span class="site-header__menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+
+    <div class="site-header__actions" id="site-header-panel" data-menu-panel>
+      <nav class="nav" aria-label="Primary navigation">
         {{ range site.Menus.main }}
           {{ $menuPath := .URL | relURL }}
           {{ $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (eq $currentPath $menuPath) }}
@@ -29,6 +52,8 @@
           <a
             class="nav__link{{ if $isActive }} nav__link--active{{ end }}"
             href="{{ $menuPath }}"
+            {{ if $isActive }}aria-current="page"{{ end }}
+            data-menu-link
           >
             {{ .Name }}
           </a>
@@ -36,4 +61,5 @@
       </nav>
     </div>
   </div>
+  <div class="site-header__backdrop" hidden data-menu-backdrop></div>
 </header>

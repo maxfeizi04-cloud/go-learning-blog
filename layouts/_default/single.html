@@ -1,5 +1,6 @@
 {{ define "main" }}
 {{ $hasToc := and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0) }}
+{{ partial "breadcrumb.html" . }}
 {{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" (.Section | humanize)) }}
 {{ $isAlgorithm := eq .Params.isAlgorithm true }}
 {{ $hasVisualization := and $isAlgorithm .Params.visualization }}
