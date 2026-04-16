@@ -588,8 +588,9 @@ pre {
 
 .article-card__meta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px 12px;
 }
 
 .article-card h3,
@@ -603,6 +604,8 @@ pre {
 .snippet-item p {
   margin: 0;
   color: var(--muted);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 .tag-row {
@@ -622,6 +625,8 @@ pre {
   color: var(--accent-deep);
   font-size: 13px;
   font-weight: 700;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .tag-pill--muted {
@@ -690,6 +695,10 @@ pre {
   margin-top: 20px;
   color: var(--muted);
   font-size: 14px;
+}
+
+.article-meta span {
+  overflow-wrap: anywhere;
 }
 
 .article-layout {
@@ -1253,7 +1262,7 @@ pre {
 
 .search-result {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   padding: 16px 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -1275,9 +1284,16 @@ pre {
   line-height: 1.4;
 }
 
+.search-result__meta {
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 .search-result__summary {
   margin: 0;
   color: var(--muted);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 .search-page {
@@ -2078,6 +2094,8 @@ pre {
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.02em;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .badge--algo {
@@ -3426,6 +3444,8 @@ pre {
 .related-teaser__meta {
   color: var(--muted);
   font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .related-teaser strong {
@@ -3437,6 +3457,8 @@ pre {
   margin: 0;
   color: var(--muted);
   font-size: 15px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 980px) {
