@@ -2,16 +2,20 @@
   {{ $related := where (site.RegularPages.Related .) "RelPermalink" "ne" .RelPermalink }}
   {{ $related = first 3 $related }}
   {{ if gt (len $related) 0 }}
-    <section class="surface related-block{{ if not (and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0)) }} related-block--narrow{{ end }}">
-      <div class="section-head">
+    <section class="related-block{{ if not (and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0)) }} related-block--narrow{{ end }}">
+      <div class="section-head related-block__head">
         <div>
           <p class="eyebrow">继续阅读</p>
-          <h2>相关推荐</h2>
+          <h2>相关文章推荐</h2>
         </div>
       </div>
-      <div class="card-grid card-grid--compact">
+      <div class="related-list">
         {{ range $related }}
-          {{ partial "article-card.html" . }}
+          <a class="related-teaser" href="{{ .RelPermalink }}">
+            <span class="related-teaser__meta">{{ .Date.Format site.Params.dateFormat }} · {{ .ReadingTime }} 分钟</span>
+            <strong>{{ .Title }}</strong>
+            <p>{{ .Summary | default (.Plain | truncate 100) }}</p>
+          </a>
         {{ end }}
       </div>
     </section>

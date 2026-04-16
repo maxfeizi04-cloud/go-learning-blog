@@ -21,8 +21,7 @@
 <meta name="theme-color" content="#0b7a5a">
 <link rel="canonical" href="{{ .Permalink }}">
 <style>{{ $criticalCSS | safeCSS }}</style>
-<link rel="preload" as="style" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}"></noscript>
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 {{ with .OutputFormats.Get "RSS" }}
 <link rel="alternate" type="application/rss+xml" title="{{ $pageTitle | default site.Title }}" href="{{ .RelPermalink }}">
 {{ end }}

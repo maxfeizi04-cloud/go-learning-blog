@@ -1,9 +1,6 @@
-{{ $searchVariant := "compact" }}
+{{ $desktopSearchVariant := "compact" }}
 {{ if .IsPage }}
-  {{ $searchVariant = "icon" }}
-{{ end }}
-{{ if or .IsHome (eq .Section "search") }}
-  {{ $searchVariant = "full" }}
+  {{ $desktopSearchVariant = "icon" }}
 {{ end }}
 {{ $currentPath := .RelPermalink }}
 <header class="site-header" data-site-header>
@@ -16,14 +13,28 @@
       </span>
     </a>
 
-    <div class="site-header__search site-header__search--desktop">
-      {{ partial "search-box.html" (dict "id" "header-search" "variant" $searchVariant) }}
+    <nav class="site-header__nav site-header__nav--desktop" aria-label="Primary navigation">
+      {{ range site.Menus.main }}
+        {{ $menuPath := .URL | relURL }}
+        {{ $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (eq $currentPath $menuPath) }}
+        {{ if and (not $isActive) (ne $menuPath "/") }}
+          {{ $isActive = hasPrefix $currentPath $menuPath }}
+        {{ end }}
+        <a
+          class="nav__link{{ if $isActive }} nav__link--active{{ end }}"
+          href="{{ $menuPath }}"
+          {{ if $isActive }}aria-current="page"{{ end }}
+        >
+          {{ .Name }}
+        </a>
+      {{ end }}
+    </nav>
+
+    <div class="site-header__desktop-search">
+      {{ partial "search-box.html" (dict "id" "header-search" "variant" $desktopSearchVariant) }}
     </div>
 
-    <div class="site-header__controls">
-      <div class="site-header__search site-header__search--mobile">
-        {{ partial "search-box.html" (dict "id" "mobile-header-search" "variant" "icon") }}
-      </div>
+    <div class="site-header__mobile-controls">
       <button
         class="site-header__menu-toggle"
         type="button"
@@ -38,11 +49,16 @@
           <span></span>
           <span></span>
         </span>
+        <span class="site-header__menu-label">导航</span>
       </button>
     </div>
 
-    <div class="site-header__actions" id="site-header-panel" data-menu-panel>
-      <nav class="nav" aria-label="Primary navigation">
+    <div class="site-header__mobile-panel" id="site-header-panel" data-menu-panel aria-hidden="true">
+      <div class="site-header__mobile-search">
+        {{ partial "search-box.html" (dict "id" "mobile-header-search" "variant" "full") }}
+      </div>
+
+      <nav class="site-header__nav site-header__nav--mobile" aria-label="Primary navigation">
         {{ range site.Menus.main }}
           {{ $menuPath := .URL | relURL }}
           {{ $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (eq $currentPath $menuPath) }}
