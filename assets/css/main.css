@@ -2634,6 +2634,7 @@ pre {
     --accent-deep: #08543f;
     --accent-soft: rgba(11, 122, 90, 0.2);
     --shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+    color-scheme: dark;
   }
   
   body {
