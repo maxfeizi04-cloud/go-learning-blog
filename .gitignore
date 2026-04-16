@@ -4,7 +4,9 @@ resources/_gen/
 .site-check/
 .site-check-visualizer/
 .site-check-search/
+.site-check-search-browser/
 .codex-run/
+.omx/
 .DS_Store
 Thumbs.db
 .idea/

@@ -1,4 +1,4 @@
-﻿name: Site Check
+name: Site Check and Deploy
 
 on:
   push:
@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -24,6 +27,14 @@ jobs:
         with:
           hugo-version: '0.159.2'
           extended: true
+
+      - name: Cache Hugo modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.hugo_cache
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-hugo-
 
       - name: Verify Hugo version
         run: hugo version
@@ -42,3 +53,47 @@ jobs:
       - name: Run search UI self-check
         shell: pwsh
         run: ./scripts/check-search-ui.ps1
+
+      - name: Check for broken links
+        uses: lycheeverse/lychee-action@v1.10.0
+        with:
+          args: --verbose --no-progress './public/**/*.html'
+          fail: true
+
+  deploy:
+    needs: site-check
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Set up Hugo Extended
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.159.2'
+          extended: true
+
+      - name: Cache Hugo modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.hugo_cache
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-hugo-
+
+      - name: Build site for production
+        run: hugo --gc --minify --cleanDestinationDir
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: go-learning-blog
+          directory: ./public
+          branch: main

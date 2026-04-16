@@ -2,12 +2,10 @@
   {{ $related := where (site.RegularPages.Related .) "RelPermalink" "ne" .RelPermalink }}
   {{ $related = first 3 $related }}
   {{ if gt (len $related) 0 }}
-    <section class="related-block{{ if not (and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0)) }} related-block--narrow{{ end }}">
-      <div class="section-head related-block__head">
-        <div>
-          <p class="eyebrow">继续阅读</p>
-          <h2>相关文章推荐</h2>
-        </div>
+    <section class="related-block article-tool article-tool--related{{ if not (and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0)) }} related-block--narrow{{ end }}">
+      <div class="related-block__head">
+        <p class="eyebrow">继续阅读</p>
+        <h2>相关文章推荐</h2>
       </div>
       <div class="related-list">
         {{ range $related }}
