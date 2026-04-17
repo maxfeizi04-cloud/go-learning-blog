@@ -20,58 +20,58 @@
   {{ end }}
 {{ end }}
 <article class="article-shell article-shell--editorial{{ if $hasToc }} article-shell--with-toc{{ else }} article-shell--solo{{ end }}">
-  <header class="article-head article-head--editorial surface{{ if not $hasToc }} article-head--narrow{{ end }}">
-    <div class="article-head__intro">
-      <div class="article-head__title-block">
-        <p class="eyebrow">{{ $sectionLabel }}</p>
-        <h1>{{ .Title }}</h1>
-      </div>
-      <div class="article-head__meta-block">
-        <div class="article-meta">
-          <span>{{ .Date.Format site.Params.dateFormat }}</span>
-          <span>{{ .ReadingTime }} 分钟阅读</span>
-          {{ with .Params.series }}
-            <span>系列：{{ index . 0 }}</span>
-          {{ end }}
-          {{ if $problemLabel }}
-            <span>题号：{{ $problemLabel }}</span>
-          {{ end }}
-        </div>
-      </div>
-    </div>
-
-    {{ with .Summary }}
-      <p class="article-head__summary">{{ . }}</p>
-    {{ end }}
-
-    {{ if or $isAlgorithm $problemLabel $difficulty $hasVisualization }}
-      <div class="article-badge-row">
-        {{ if $isAlgorithm }}
-          <span class="badge badge--algo">算法题解</span>
-        {{ end }}
-        {{ if $hasVisualization }}
-          <span class="badge badge--viz">可视化</span>
-        {{ end }}
-        {{ if $problemLabel }}
-          <span class="badge badge--source">{{ $problemLabel }}</span>
-        {{ end }}
-        {{ if $difficulty }}
-          <span class="badge badge--difficulty badge--difficulty-{{ lower $difficulty }}">难度：{{ $difficultyLabel }}</span>
-        {{ end }}
-      </div>
-    {{ end }}
-
-    {{ with .Params.tags }}
-      <div class="tag-row">
-        {{ range . }}
-          <a class="tag-pill" href="{{ (printf "/tags/%s/" (. | urlize)) | relURL }}">#{{ . }}</a>
-        {{ end }}
-      </div>
-    {{ end }}
-  </header>
-
   <div class="article-layout{{ if $hasToc }} article-layout--with-toc{{ end }}">
     <div class="article-content">
+      <header class="article-head article-head--editorial surface{{ if not $hasToc }} article-head--narrow{{ end }}">
+        <div class="article-head__intro">
+          <div class="article-head__title-block">
+            <p class="eyebrow">{{ $sectionLabel }}</p>
+            <h1>{{ .Title }}</h1>
+          </div>
+          <div class="article-head__meta-block">
+            <div class="article-meta">
+              <span>{{ .Date.Format site.Params.dateFormat }}</span>
+              <span>{{ .ReadingTime }} 分钟阅读</span>
+              {{ with .Params.series }}
+                <span>系列：{{ index . 0 }}</span>
+              {{ end }}
+              {{ if $problemLabel }}
+                <span>题号：{{ $problemLabel }}</span>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+
+        {{ with .Summary }}
+          <p class="article-head__summary">{{ . }}</p>
+        {{ end }}
+
+        {{ if or $isAlgorithm $problemLabel $difficulty $hasVisualization }}
+          <div class="article-badge-row">
+            {{ if $isAlgorithm }}
+              <span class="badge badge--algo">算法题解</span>
+            {{ end }}
+            {{ if $hasVisualization }}
+              <span class="badge badge--viz">可视化</span>
+            {{ end }}
+            {{ if $problemLabel }}
+              <span class="badge badge--source">{{ $problemLabel }}</span>
+            {{ end }}
+            {{ if $difficulty }}
+              <span class="badge badge--difficulty badge--difficulty-{{ lower $difficulty }}">难度：{{ $difficultyLabel }}</span>
+            {{ end }}
+          </div>
+        {{ end }}
+
+        {{ with .Params.tags }}
+          <div class="tag-row">
+            {{ range . }}
+              <a class="tag-pill" href="{{ (printf "/tags/%s/" (. | urlize)) | relURL }}">#{{ . }}</a>
+            {{ end }}
+          </div>
+        {{ end }}
+      </header>
+
       <div class="article-body surface{{ if not $hasToc }} article-body--narrow{{ end }}">
         {{ if $hasVisualization }}
           {{ partial "algorithm-visualizer.html" . }}
