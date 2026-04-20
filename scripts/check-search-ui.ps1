@@ -127,11 +127,9 @@ function getResults(container) {
 function assertResultCards(results, label) {
   assert.ok(results.length > 0, label + ': expected at least one search result');
   for (const result of results) {
-    assert.ok(result.querySelector('.search-result__meta'), label + ': result missing meta');
-    assert.ok(result.querySelector('.search-result__summary'), label + ': result missing summary');
-    const summaryText = result.querySelector('.search-result__summary')?.textContent?.trim() || '';
-    assert.ok(summaryText.length > 0, label + ': summary should not be empty');
-    assert.ok(summaryText.length <= 160, label + ': summary should remain truncated');
+    assert.ok(result.querySelector('.search-result__title'), label + ': result missing title');
+    assert.equal(result.querySelector('.search-result__meta'), null, label + ': result should not render meta');
+    assert.equal(result.querySelector('.search-result__summary'), null, label + ': result should not render summary');
   }
 }
 
