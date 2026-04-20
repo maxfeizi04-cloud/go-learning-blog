@@ -74,9 +74,10 @@ email = "orb_wy_yzz@163.com"
 github = "https://github.com/maxfeizi04-cloud"
 dateFormat = "2006-01-02"
 mainSections = ["posts", "snippets", "grpc", "rabbitmq"]
+articleSections = ["posts", "grpc", "rabbitmq"]
 
   [params.giscus]
-  enabled = true
+  enabled = false
   repo = "maxfeizi04-cloud/go-learning-blog"
   repoId = "R_kgDOR33oYw"
   category = "Announcements"

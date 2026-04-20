@@ -1,8 +1,11 @@
-{{ if eq .Section "posts" }}
+{{ $articleSections := site.Params.articleSections | default (slice "posts") }}
+{{ $isArticleSection := in $articleSections .Section }}
+{{ if $isArticleSection }}
   {{ $related := where (site.RegularPages.Related .) "RelPermalink" "ne" .RelPermalink }}
   {{ $related = first 3 $related }}
+  {{ $hasToc := gt (len (findRE "<li[ >]" .TableOfContents 1)) 0 }}
   {{ if gt (len $related) 0 }}
-    <section class="related-block article-tool article-tool--related{{ if not (and (eq .Section "posts") (gt (len (findRE "<li[ >]" .TableOfContents 1)) 0)) }} related-block--narrow{{ end }}">
+    <section class="related-block article-tool article-tool--related{{ if not $hasToc }} related-block--narrow{{ end }}">
       <div class="related-block__head">
         <p class="eyebrow">继续阅读</p>
         <h2>相关文章推荐</h2>

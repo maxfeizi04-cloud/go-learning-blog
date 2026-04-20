@@ -78,6 +78,15 @@ const scriptPath = path.join(workspace, 'assets/js/search.js');
 const scriptContent = fs.readFileSync(scriptPath, 'utf8');
 const indexData = JSON.parse(fs.readFileSync(path.join(destination, 'index.json'), 'utf8'));
 
+function assertIndexCoverage() {
+  const bySection = indexData.reduce((sections, item) => {
+    sections[item.section] = (sections[item.section] || 0) + 1;
+    return sections;
+  }, {});
+  assert.ok(bySection.grpc > 0, 'search index: expected grpc entries');
+  assert.ok(bySection.rabbitmq > 0, 'search index: expected rabbitmq entries');
+}
+
 function createFetch(baseUrl) {
   return async (input) => {
     const href = typeof input === 'string' ? input : input.url;
@@ -136,6 +145,14 @@ function assertResultCards(results, label) {
 function assertHighlights(results, label) {
   const hasHighlight = results.some((result) => result.querySelector('.search-result__highlight'));
   assert.ok(hasHighlight, label + ': expected highlighted query fragments');
+}
+
+function assertSectionResult(results, section, label) {
+  const hasExpectedSection = results.some((result) => {
+    const href = result.getAttribute('href') || '';
+    return href.includes('/' + section + '/');
+  });
+  assert.ok(hasExpectedSection, label + ': expected at least one ' + section + ' result');
 }
 
 async function loadPage(relativePath, url, width) {
@@ -228,9 +245,31 @@ async function runFullSearchSmoke() {
   console.log('PASS full search smoke');
 }
 
+async function runTrackSearchSmoke(query, section, expectedGroupTitle) {
+  const dom = await loadPage('search/index.html', 'http://example.test/search/?q=' + encodeURIComponent(query), 1280);
+  const { window } = dom;
+  const resultsContainer = window.document.querySelector('[data-search-page-results]');
+
+  assert.ok(resultsContainer, section + ' search: missing results container');
+  await waitFor(window, () => getResults(resultsContainer).length > 0, section + ' search: results did not render');
+
+  const results = getResults(resultsContainer);
+  assertResultCards(results, section + ' search');
+  assertSectionResult(results, section, section + ' search');
+
+  const groupTitles = Array.from(window.document.querySelectorAll('.search-group__title')).map((node) => node.textContent?.trim() || '');
+  assert.ok(groupTitles.includes(expectedGroupTitle), section + ' search: expected section group heading');
+
+  dom.window.close();
+  console.log('PASS ' + section + ' search smoke');
+}
+
 (async () => {
+  assertIndexCoverage();
   await runIconSearchSmoke();
   await runFullSearchSmoke();
+  await runTrackSearchSmoke('grpc', 'grpc', 'gRPC 学习');
+  await runTrackSearchSmoke('rabbitmq', 'rabbitmq', 'RabbitMQ 学习');
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;

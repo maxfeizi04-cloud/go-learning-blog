@@ -3284,6 +3284,7 @@ pre {
 
 .article-head--editorial {
   width: 100%;
+  max-width: none;
   padding: clamp(24px, 3vw, 36px);
   border-radius: 34px;
   background: linear-gradient(180deg, rgba(255, 252, 246, 0.96), rgba(241, 248, 244, 0.9));

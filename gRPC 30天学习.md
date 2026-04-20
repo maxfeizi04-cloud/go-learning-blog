@@ -62,7 +62,7 @@ gRPC 适合服务间通信，核心原因是它更符合“机器调用机器”
 
 gRPC 适合服务间通信，因为内部服务更看重性能、类型安全、接口一致性和跨语言协作，而这些正是 gRPC 的强项。
 
-
+GRPC 学习
 
 1. 第 2 天：理解 Protocol Buffers 基础，读 [Protocol Buffers Docs](https://protobuf.dev/) 和 [Go Tutorial](https://protobuf.dev/getting-started/gotutorial/)。做什么：写一个最小 hello.proto。验收：知道 message、字段号、标量类型是什么意思。
 2. 第 3 天：学习 package、go_package、生成规则，读 [Go Generated Code Guide](https://protobuf.dev/reference/go/go-generated/)。做什么：手动跑一遍 protoc、--go_out、--go-grpc_out。验收：能解释你前面遇到的 unable to determine Go import path。

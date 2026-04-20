@@ -1,9 +1,13 @@
 {{ define "main" }}
+{{ $articleSections := site.Params.articleSections | default (slice "posts") }}
+{{ $latestArticles := where site.RegularPages.ByDate.Reverse "Section" "in" $articleSections }}
 {{ $posts := where site.RegularPages.ByDate.Reverse "Section" "posts" }}
 {{ $snippets := where site.RegularPages.ByDate.Reverse "Section" "snippets" }}
 {{ $algoPosts := where $posts "Params.isAlgorithm" true }}
 {{ $goPosts := where $posts "Params.isAlgorithm" "ne" true }}
 {{ $modulePosts := where $posts "Params.series" "intersect" (slice "Go 模块与依赖管理") }}
+{{ $grpcSection := site.GetPage "section" "grpc" }}
+{{ $rabbitmqSection := site.GetPage "section" "rabbitmq" }}
 {{ $featuredPost := index $posts 0 }}
 {{ $featuredGo := index $goPosts 0 }}
 {{ $featuredAlgo := index $algoPosts 0 }}
@@ -138,17 +142,46 @@
   </section>
   {{ end }}
 
+  {{ if or $grpcSection $rabbitmqSection }}
+  <section class="surface surface--feature">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">学习路线</p>
+        <h2>30 天专题入口</h2>
+      </div>
+      <a class="text-link" href="{{ "roadmap/" | relURL }}">查看路线图</a>
+    </div>
+    <div class="entry-list">
+      {{ with $grpcSection }}
+        {{ $trackPages := .Pages.ByWeight }}
+        <a class="entry-card" href="{{ .RelPermalink }}">
+          <strong>{{ .Title }}</strong>
+          <p>{{ .Description | default "按 30 天节奏把 gRPC 从环境搭建推进到流式 RPC、拦截器、TLS 与生产化实践。" }}</p>
+          <span class="entry-card__meta">{{ len $trackPages }} 天内容 · 4 周节奏</span>
+        </a>
+      {{ end }}
+      {{ with $rabbitmqSection }}
+        {{ $trackPages := .Pages.ByWeight }}
+        <a class="entry-card" href="{{ .RelPermalink }}">
+          <strong>{{ .Title }}</strong>
+          <p>{{ .Description | default "按 30 天节奏系统学习 RabbitMQ 的模型、可靠性、重试、幂等、队列类型与运维实践。" }}</p>
+          <span class="entry-card__meta">{{ len $trackPages }} 天内容 · 4 周节奏</span>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
   <section class="surface surface--stream">
     <div class="section-head">
       <div>
         <p class="eyebrow">最新更新</p>
-        <h2>Go 与算法学习记录</h2>
+        <h2>学习内容最近更新</h2>
       </div>
-      <a class="text-link" href="{{ "posts/" | relURL }}">查看全部</a>
     </div>
 
     <div class="card-grid">
-      {{ range first 6 $posts }}
+      {{ range first 6 $latestArticles }}
         {{ partial "article-card.html" . }}
       {{ end }}
     </div>

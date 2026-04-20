@@ -1,11 +1,12 @@
 {{ $giscus := site.Params.giscus }}
+{{ $articleSections := site.Params.articleSections | default (slice "posts") }}
 {{ $hasGiscusConfig := and
   $giscus.enabled
   (ne ($giscus.repo | default "") "")
   (ne ($giscus.repoId | default "") "")
   (ne ($giscus.category | default "") "")
   (ne ($giscus.categoryId | default "") "") }}
-{{ if and $hasGiscusConfig (eq .Section "posts") }}
+{{ if and $hasGiscusConfig (in $articleSections .Section) }}
   <section class="surface comments-block">
     <div id="giscus_thread"></div>
     <script

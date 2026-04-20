@@ -48,6 +48,7 @@
 
 [hugo.toml](D:\Codex\go-learning-blog\hugo.toml) 里目前已经预填：
 
+- `enabled = false`（避免出现“配置未完成但看起来已开启”的状态）
 - `repo = "maxfeizi04-cloud/go-learning-blog"`
 - `repoId = "R_kgDOR33oYw"`
 - `category = "Announcements"`
@@ -55,7 +56,6 @@
 你后面只需要把：
 
 - `categoryId`
-- `enabled`
 
 补齐成下面这样：
 

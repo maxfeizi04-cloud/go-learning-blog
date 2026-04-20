@@ -6,7 +6,7 @@
 
 - 自定义 Hugo 布局，不依赖外部主题
 - 首页、列表页、文章页、标签页、关于页、404 页面
-- `posts` / `snippets` 两种内容模型
+- `posts` / `snippets` 内容 + `grpc` / `rabbitmq` 学习线
 - Go 学习记录 + 算法题解双主线
 - `tags` / `series` 分类
 - 代码高亮、目录、上一篇/下一篇
@@ -82,10 +82,23 @@ cd D:\Codex\go-learning-blog
 .\scripts\new-snippet.ps1 -Title "用 benchstat 比较基准测试结果" -Tags testing,performance
 ```
 
+新建学习线中的某一天内容：
+
+```powershell
+.\scripts\new-study-day.ps1 -Track grpc -Day 12 -Title "学习 metadata 和 interceptor 的边界" -Tags interceptor,metadata
+```
+
+如果你想按现有 30 天模板继续维护某条学习线，也可以直接指定标题主题，脚本会自动补齐 `day/week/series/tags/slug`：
+
+```powershell
+.\scripts\new-study-day.ps1 -Track rabbitmq -Day 12 -Title "学习 publisher confirm 和 mandatory 的边界"
+```
+
 ## 内容建议
 
 - `posts` 放完整学习文章、算法题解、工程实践总结
 - `snippets` 放短技巧、算法模板、代码片段和命令备忘
+- `grpc` / `rabbitmq` 适合放按天推进的学习路线内容
 - 用 `series` 串起长期主题，例如 `Go 并发与控制流`、`算法与数据结构`
 - 每篇文章写 `summary`
 - 图片尽量跟文章一起放在 page bundle 目录里

@@ -1,4 +1,11 @@
 ﻿(() => {
+  const SECTION_LABELS = {
+    posts: '学习记录',
+    snippets: '代码片段',
+    grpc: 'gRPC 学习',
+    rabbitmq: 'RabbitMQ 学习'
+  };
+  const SECTION_ORDER = ['posts', 'grpc', 'rabbitmq', 'snippets'];
   const body = document.body;
   const indexUrl = body?.dataset.searchIndexUrl;
   const searchPageUrl = body?.dataset.searchPageUrl || '/search/';
@@ -281,13 +288,7 @@
   }
 
   function sectionLabel(section) {
-    if (section === 'posts') {
-      return '学习记录';
-    }
-    if (section === 'snippets') {
-      return '代码片段';
-    }
-    return section;
+    return SECTION_LABELS[section] || section;
   }
 
   function appendHighlightedText(target, text, query) {
@@ -366,8 +367,13 @@
     }
 
     const groups = groupResultsBySection(results);
-    const preferredOrder = ['posts', 'snippets'];
-    const sectionKeys = [...groups.keys()].sort((left, right) => preferredOrder.indexOf(left) - preferredOrder.indexOf(right));
+    const getSectionOrder = (section) => {
+      const index = SECTION_ORDER.indexOf(section);
+      return index === -1 ? SECTION_ORDER.length : index;
+    };
+    const sectionKeys = [...groups.keys()].sort((left, right) =>
+      getSectionOrder(left) - getSectionOrder(right) || sectionLabel(left).localeCompare(sectionLabel(right), 'zh-CN')
+    );
 
     for (const section of sectionKeys) {
       const items = groups.get(section) || [];
