@@ -1,0 +1,56 @@
+{{ define "main" }}
+{{ $pages := .Pages.ByWeight }}
+{{ partial "breadcrumb.html" . }}
+<section class="page-hero">
+  <p class="eyebrow">RabbitMQ 学习</p>
+  <h1>{{ .Title }}</h1>
+  <p class="page-hero__lead">{{ .Description }}</p>
+</section>
+
+<section class="surface roadmap-group">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">学习节奏</p>
+      <h2>4 周完成 30 天</h2>
+    </div>
+  </div>
+  <div class="roadmap-list">
+    <div class="roadmap-item roadmap-item--static">
+      <strong>第 1 周</strong>
+      <p>先把模型概念和 6 个官方基础教程全部跑通。</p>
+    </div>
+    <div class="roadmap-item roadmap-item--static">
+      <strong>第 2 周</strong>
+      <p>重点补齐可靠性、ack、prefetch、publisher confirm 与重连边界。</p>
+    </div>
+    <div class="roadmap-item roadmap-item--static">
+      <strong>第 3 周</strong>
+      <p>集中解决 TTL、DLX、重试链路、毒消息和业务幂等。</p>
+    </div>
+    <div class="roadmap-item roadmap-item--static">
+      <strong>第 4 周</strong>
+      <p>学习队列类型、Streams、policy、监控、集群与最终项目集成。</p>
+    </div>
+  </div>
+</section>
+
+{{ range seq 1 4 }}
+  {{ $week := . }}
+  {{ $weekPages := where $pages "Params.week" $week }}
+  {{ if gt (len $weekPages) 0 }}
+    <section class="surface">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Week {{ $week }}</p>
+          <h2>第 {{ $week }} 周</h2>
+        </div>
+      </div>
+      <div class="card-grid">
+        {{ range $weekPages }}
+          {{ partial "article-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}
+{{ end }}

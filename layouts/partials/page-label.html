@@ -20,6 +20,10 @@
     {{- $label = "Go 工程" -}}
   {{- else if eq $value "roadmap" -}}
     {{- $label = "路线图" -}}
+  {{- else if eq $value "grpc" -}}
+    {{- $label = "gRPC 学习" -}}
+  {{- else if eq $value "rabbitmq" -}}
+    {{- $label = "RabbitMQ 学习" -}}
   {{- end -}}
 {{- else if eq $kind "taxonomy" -}}
   {{- if or (eq $value "tag") (eq $value "tags") -}}
