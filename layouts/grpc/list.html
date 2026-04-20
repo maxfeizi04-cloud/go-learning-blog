@@ -7,6 +7,14 @@
   <p class="page-hero__lead">{{ .Description }}</p>
 </section>
 
+{{ with .Content }}
+  <section class="surface">
+    <div class="prose">
+      {{ . }}
+    </div>
+  </section>
+{{ end }}
+
 <section class="surface roadmap-group">
   <div class="section-head">
     <div>
