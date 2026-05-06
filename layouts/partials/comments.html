@@ -9,21 +9,26 @@
 {{ if and $hasGiscusConfig (in $articleSections .Section) }}
   <section class="surface comments-block">
     <div id="giscus_thread"></div>
-    <script
-      src="https://giscus.app/client.js"
-      data-repo="{{ $giscus.repo }}"
-      data-repo-id="{{ $giscus.repoId }}"
-      data-category="{{ $giscus.category }}"
-      data-category-id="{{ $giscus.categoryId }}"
-      data-mapping="{{ $giscus.mapping }}"
-      data-strict="{{ $giscus.strict }}"
-      data-reactions-enabled="{{ $giscus.reactionsEnabled }}"
-      data-emit-metadata="{{ $giscus.emitMetadata }}"
-      data-input-position="{{ $giscus.inputPosition }}"
-      data-theme="{{ $giscus.theme }}"
-      data-lang="{{ $giscus.lang }}"
-      crossorigin="anonymous"
-      async
-    ></script>
+    <script>
+      (function() {
+        var giscusTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        var script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.setAttribute('data-repo', '{{ $giscus.repo }}');
+        script.setAttribute('data-repo-id', '{{ $giscus.repoId }}');
+        script.setAttribute('data-category', '{{ $giscus.category }}');
+        script.setAttribute('data-category-id', '{{ $giscus.categoryId }}');
+        script.setAttribute('data-mapping', '{{ $giscus.mapping }}');
+        script.setAttribute('data-strict', '{{ $giscus.strict }}');
+        script.setAttribute('data-reactions-enabled', '{{ $giscus.reactionsEnabled }}');
+        script.setAttribute('data-emit-metadata', '{{ $giscus.emitMetadata }}');
+        script.setAttribute('data-input-position', '{{ $giscus.inputPosition }}');
+        script.setAttribute('data-theme', giscusTheme);
+        script.setAttribute('data-lang', '{{ $giscus.lang }}');
+        script.crossOrigin = 'anonymous';
+        script.async = true;
+        document.getElementById('giscus_thread').appendChild(script);
+      })();
+    </script>
   </section>
 {{ end }}

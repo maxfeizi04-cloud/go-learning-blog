@@ -1,0 +1,13 @@
+{{- $menuPath := .Item.URL | relURL -}}
+{{- $isActive := or ($.Context.IsMenuCurrent "main" .Item) ($.Context.HasMenuCurrent "main" .Item) (eq .CurrentPath $menuPath) -}}
+{{- if and (not $isActive) (ne $menuPath "/") -}}
+  {{- $isActive = hasPrefix .CurrentPath $menuPath -}}
+{{- end -}}
+<a
+  class="nav__link{{ if $isActive }} nav__link--active{{ end }}"
+  href="{{ $menuPath }}"
+  {{ if $isActive }}aria-current="page"{{ end }}
+  {{ with .ExtraAttr }}{{ . }}{{ end }}
+>
+  {{ .Item.Name }}
+</a>

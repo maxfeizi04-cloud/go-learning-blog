@@ -15,18 +15,7 @@
 
     <nav class="site-header__nav site-header__nav--desktop" aria-label="Primary navigation">
       {{ range site.Menus.main }}
-        {{ $menuPath := .URL | relURL }}
-        {{ $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (eq $currentPath $menuPath) }}
-        {{ if and (not $isActive) (ne $menuPath "/") }}
-          {{ $isActive = hasPrefix $currentPath $menuPath }}
-        {{ end }}
-        <a
-          class="nav__link{{ if $isActive }} nav__link--active{{ end }}"
-          href="{{ $menuPath }}"
-          {{ if $isActive }}aria-current="page"{{ end }}
-        >
-          {{ .Name }}
-        </a>
+        {{ partial "nav-link.html" (dict "Context" $ "Item" . "CurrentPath" $currentPath) }}
       {{ end }}
     </nav>
 
@@ -60,19 +49,7 @@
 
       <nav class="site-header__nav site-header__nav--mobile" aria-label="Primary navigation">
         {{ range site.Menus.main }}
-          {{ $menuPath := .URL | relURL }}
-          {{ $isActive := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (eq $currentPath $menuPath) }}
-          {{ if and (not $isActive) (ne $menuPath "/") }}
-            {{ $isActive = hasPrefix $currentPath $menuPath }}
-          {{ end }}
-          <a
-            class="nav__link{{ if $isActive }} nav__link--active{{ end }}"
-            href="{{ $menuPath }}"
-            {{ if $isActive }}aria-current="page"{{ end }}
-            data-menu-link
-          >
-            {{ .Name }}
-          </a>
+          {{ partial "nav-link.html" (dict "Context" $ "Item" . "CurrentPath" $currentPath "ExtraAttr" "data-menu-link") }}
         {{ end }}
       </nav>
     </div>

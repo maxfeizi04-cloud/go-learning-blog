@@ -2,17 +2,7 @@ param(
   [string]$ContentRoot = 'content'
 )
 
-function Resolve-SafePath([string]$BaseDir, [string]$RelativePath) {
-  $basePath = [System.IO.Path]::GetFullPath($BaseDir)
-  $targetPath = [System.IO.Path]::GetFullPath((Join-Path $basePath $RelativePath))
-  $baseWithSeparator = if ($basePath.EndsWith([System.IO.Path]::DirectorySeparatorChar)) { $basePath } else { $basePath + [System.IO.Path]::DirectorySeparatorChar }
-
-  if ($targetPath -ne $basePath -and -not $targetPath.StartsWith($baseWithSeparator, [System.StringComparison]::OrdinalIgnoreCase)) {
-    throw "Resolved path escapes workspace: $targetPath"
-  }
-
-  return $targetPath
-}
+Import-Module (Join-Path $PSScriptRoot 'Shared.psm1') -Force
 
 function Get-FrontMatter([string]$Content) {
   $match = [regex]::Match($Content, '(?s)\A\+\+\+\r?\n(.*?)\r?\n\+\+\+')
@@ -21,16 +11,6 @@ function Get-FrontMatter([string]$Content) {
   }
 
   return $null
-}
-
-function Get-TomlString([string]$FrontMatter, [string]$Key) {
-  $pattern = '(?m)^' + [regex]::Escape($Key) + '\s*=\s*"((?:[^"\\]|\\.)*)"\s*$'
-  $match = [regex]::Match($FrontMatter, $pattern)
-  if ($match.Success) {
-    return $match.Groups[1].Value.Trim()
-  }
-
-  return ''
 }
 
 function Get-TomlArray([string]$FrontMatter, [string]$Key) {
@@ -42,16 +22,6 @@ function Get-TomlArray([string]$FrontMatter, [string]$Key) {
 
   $values = [regex]::Matches($match.Groups[1].Value, '"((?:[^"\\]|\\.)*)"')
   return @($values | ForEach-Object { $_.Groups[1].Value.Trim() })
-}
-
-function Get-TomlBool([string]$FrontMatter, [string]$Key) {
-  $pattern = '(?m)^' + [regex]::Escape($Key) + '\s*=\s*(true|false)\s*$'
-  $match = [regex]::Match($FrontMatter, $pattern)
-  if ($match.Success) {
-    return $match.Groups[1].Value -eq 'true'
-  }
-
-  return $null
 }
 
 function Get-TomlInteger([string]$FrontMatter, [string]$Key) {

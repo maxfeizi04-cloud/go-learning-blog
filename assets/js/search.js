@@ -186,7 +186,11 @@
           }
           return response.json();
         })
-        .then((items) => items.map(preprocessDocument));
+        .then((items) => items.map(preprocessDocument))
+        .catch((error) => {
+          loadIndexPromise = null;
+          throw error;
+        });
     }
 
     return loadIndexPromise;

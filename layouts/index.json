@@ -8,7 +8,7 @@
     {
       "title": {{ $page.Title | jsonify }},
       "summary": {{ (printf "%s %s" $searchExtra ($page.Summary | default ($page.Plain | truncate 160))) | plainify | htmlUnescape | jsonify }},
-      "content": {{ (printf "%s %s %s" $searchExtra $page.Title ($page.Plain | plainify | htmlUnescape | replaceRE "\\s+" " ")) | plainify | htmlUnescape | jsonify }},
+      "content": {{ (printf "%s %s %s" $searchExtra $page.Title ($page.Plain | plainify | htmlUnescape | replaceRE "\\s+" " " | truncate 600 "")) | plainify | htmlUnescape | jsonify }},
       "section": {{ $page.Section | jsonify }},
       "date": {{ $page.Date.Format "2006-01-02" | jsonify }},
       "permalink": {{ $page.RelPermalink | jsonify }},

@@ -6,6 +6,9 @@ on:
       - main
   pull_request:
 
+env:
+  HUGO_VERSION: '0.159.2'
+
 jobs:
   site-check:
     runs-on: ubuntu-latest
@@ -25,7 +28,7 @@ jobs:
       - name: Set up Hugo Extended
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.159.2'
+          hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
 
       - name: Cache Hugo modules
@@ -75,7 +78,7 @@ jobs:
       - name: Set up Hugo Extended
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.159.2'
+          hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
 
       - name: Cache Hugo modules
