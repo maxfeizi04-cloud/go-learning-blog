@@ -174,7 +174,7 @@
   color: var(--muted);
   font-size: 14px;
   line-height: 1.5;
-  transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  transition: background-color var(--ease-out), color var(--ease-out), transform var(--ease-out);
 }
 
 .toc-card a:hover {
@@ -363,7 +363,7 @@
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  transition: background-color var(--ease-out), border-color var(--ease-out), transform var(--ease-out);
 }
 
 .code-copy:hover:not(:disabled) {
@@ -473,7 +473,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: transform var(--ease-out), box-shadow var(--ease-out), border-color var(--ease-out);
 }
 
 .entry-card:hover {
@@ -673,7 +673,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: transform var(--ease-out), box-shadow var(--ease-out), border-color var(--ease-out);
 }
 
 .topic-card:hover {
@@ -787,7 +787,7 @@
   font: inherit;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+  transition: transform var(--ease-out), box-shadow var(--ease-out), border-color var(--ease-out), background-color var(--ease-out);
 }
 
 .algorithm-visualizer__button:hover:not(:disabled) {
@@ -934,7 +934,7 @@
   color: inherit;
   text-align: left;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+  transition: transform var(--ease-out), box-shadow var(--ease-out), border-color var(--ease-out), background-color var(--ease-out);
 }
 
 .algorithm-visualizer__timeline-button:hover,
@@ -989,7 +989,7 @@
   border: 1px solid rgba(29, 45, 43, 0.08);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.84);
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+  transition: transform var(--ease-out), border-color var(--ease-out), box-shadow var(--ease-out), background-color var(--ease-out);
 }
 
 .algo-cell--current {
@@ -1206,4 +1206,44 @@
   .algorithm-visualizer__timeline {
     max-height: none;
   }
+}
+
+/* Magazine editorial typography */
+.article-shell h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  line-height: var(--leading-heading);
+  letter-spacing: -0.02em;
+}
+
+.article-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.article-body blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  border-left: 3px solid var(--accent);
+  padding-left: 1.5em;
+  margin: 2em 0;
+  color: var(--muted);
+}
+
+.prose .highlight pre,
+.prose pre.chroma {
+  margin: 2.5em 0;
+  border-radius: var(--radius-lg);
+}
+
+/* Wide break-out for code blocks and images */
+.article-body .highlight,
+.article-body figure {
+  margin-left: calc(-1 * (var(--article-body-width) - 100%) / 2);
+  margin-right: calc(-1 * (var(--article-body-width) - 100%) / 2);
+}
+
+.article-body .highlight pre,
+.article-body figure img {
+  width: 100%;
 }

@@ -63,7 +63,7 @@ pre {
   color: #fff;
   box-shadow: 0 14px 30px rgba(15, 31, 29, 0.2);
   transform: translateY(-180%);
-  transition: transform 0.2s ease;
+  transition: transform var(--ease-out);
 }
 
 .skip-link:focus {

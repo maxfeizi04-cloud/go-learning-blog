@@ -86,10 +86,10 @@
   color: var(--text);
   cursor: pointer;
   transition:
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.18s ease,
-    border-color 0.18s ease,
-    background-color 0.18s ease;
+    transform var(--ease-out),
+    box-shadow var(--ease-out),
+    border-color var(--ease-out),
+    background-color var(--ease-out);
 }
 
 .site-header__menu-toggle:hover,
@@ -110,7 +110,7 @@
   height: 2px;
   border-radius: 999px;
   background: currentColor;
-  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.18s ease;
+  transition: transform var(--ease-out), opacity var(--ease-out);
 }
 
 .site-header[data-menu-open="true"] .site-header__menu-icon span:nth-child(1) {
@@ -151,7 +151,7 @@
   color: var(--muted);
   font-size: 14px;
   font-weight: 600;
-  transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+  transition: transform var(--ease-out), background-color var(--ease-out), color var(--ease-out);
 }
 
 .nav__link:hover,
@@ -195,7 +195,7 @@
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.18s ease;
+  transition: color var(--ease-out);
 }
 
 .breadcrumb__link:hover {
@@ -597,7 +597,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: transform var(--ease-out), box-shadow var(--ease-out), border-color var(--ease-out);
 }
 
 .roadmap-item:hover {
