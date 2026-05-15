@@ -1,16 +1,10 @@
 {{ define "main" }}
-{{ $articleSections := site.Params.articleSections | default (slice "posts") }}
-{{ $latestArticles := where site.RegularPages.ByDate.Reverse "Section" "in" $articleSections }}
 {{ $posts := where site.RegularPages.ByDate.Reverse "Section" "posts" }}
 {{ $snippets := where site.RegularPages.ByDate.Reverse "Section" "snippets" }}
 {{ $algoPosts := where $posts "Params.isAlgorithm" true }}
 {{ $goPosts := where $posts "Params.isAlgorithm" "ne" true }}
-{{ $modulePosts := where $posts "Params.series" "intersect" (slice "Go 模块与依赖管理") }}
-{{ $grpcSection := site.GetPage "section" "grpc" }}
-{{ $rabbitmqSection := site.GetPage "section" "rabbitmq" }}
+{{ $latestArticles := where site.RegularPages.ByDate.Reverse "Section" "in" site.Params.articleSections }}
 {{ $featuredPost := index $posts 0 }}
-{{ $featuredGo := index $goPosts 0 }}
-{{ $featuredAlgo := index $algoPosts 0 }}
 
 <section class="landing-hero">
   <div class="landing-hero__inner">
@@ -39,138 +33,61 @@
       </dl>
     </div>
 
-    <div class="landing-hero__stage">
-      {{ with $featuredPost }}
-        <a class="landing-hero__feature" href="{{ .RelPermalink }}">
-          <span class="landing-hero__feature-kicker">最新发布</span>
-          <strong>{{ .Title }}</strong>
-          <p>{{ .Summary | default (.Plain | truncate 110) }}</p>
-          <span class="landing-hero__feature-meta">{{ .Date.Format site.Params.dateFormat }} · {{ .ReadingTime }} 分钟阅读</span>
-        </a>
-      {{ end }}
-
-      <div class="landing-hero__tracks">
-        {{ with $featuredGo }}
-          <a class="landing-hero__track" href="{{ .RelPermalink }}">
-            <span>Go 工程</span>
-            <strong>{{ .Title }}</strong>
-            <p>{{ .Summary | default (.Plain | truncate 82) }}</p>
-          </a>
-        {{ end }}
-        {{ with $featuredAlgo }}
-          <a class="landing-hero__track" href="{{ .RelPermalink }}">
-            <span>算法题解</span>
-            <strong>{{ .Title }}</strong>
-            <p>{{ .Summary | default (.Plain | truncate 82) }}</p>
-          </a>
-        {{ end }}
-        {{ if gt (len $modulePosts) 0 }}
-          <a class="landing-hero__track landing-hero__track--accent" href="{{ "go-modules/" | relURL }}">
-            <span>模块专题</span>
-            <strong>依赖管理与工程化配置</strong>
-            <p>聚焦 go.mod、版本约束、私有仓库与发布流程的稳定实践。</p>
-          </a>
-        {{ end }}
-      </div>
-    </div>
+    {{ with $featuredPost }}
+    <a class="landing-hero__feature" href="{{ .RelPermalink }}">
+      <span class="landing-hero__feature-kicker">最新发布</span>
+      <strong>{{ .Title }}</strong>
+      <p>{{ .Summary | default (.Plain | truncate 110) }}</p>
+      <span class="landing-hero__feature-meta">{{ .Date.Format site.Params.dateFormat }} · {{ .ReadingTime }} 分钟阅读</span>
+    </a>
+    {{ end }}
   </div>
 </section>
 
 <div class="home-flow">
-  <section class="split-grid split-grid--editorial">
-    <section class="surface entry-panel">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Go 工程</p>
-          <h2>最近的 Go 工程文章</h2>
-        </div>
-        <a class="text-link" href="{{ "go-engineering/" | relURL }}">进入专题</a>
-      </div>
-      <div class="entry-list">
-        {{ range first 3 $goPosts }}
-          <a class="entry-card" href="{{ .RelPermalink }}">
-            <strong>{{ .Title }}</strong>
-            <p>{{ .Summary | default (.Plain | truncate 88) }}</p>
-            <span class="entry-card__meta">{{ .Date.Format site.Params.dateFormat }}</span>
-          </a>
-        {{ end }}
-      </div>
-    </section>
 
-    <section class="surface entry-panel">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">算法题解</p>
-          <h2>最近的算法练习</h2>
-        </div>
-        <a class="text-link" href="{{ "algorithms/" | relURL }}">进入专题</a>
-      </div>
-      <div class="entry-list">
-        {{ range first 3 $algoPosts }}
-          {{ $problemLabel := "" }}
-          {{ if or .Params.source .Params.problemId }}
-            {{ $problemLabel = printf "%s %s" (.Params.source | default "") (.Params.problemId | default "") }}
-          {{ end }}
-          <a class="entry-card" href="{{ .RelPermalink }}">
-            <strong>{{ .Title }}</strong>
-            <p>{{ .Summary | default (.Plain | truncate 88) }}</p>
-            <span class="entry-card__meta">{{ strings.TrimSpace $problemLabel }}{{ if .Params.difficulty }} · {{ partial "difficulty-label.html" (dict "value" .Params.difficulty "fallback" .Params.difficulty) }}{{ end }}</span>
-          </a>
-        {{ end }}
-      </div>
-    </section>
-  </section>
+  <section class="surface">
+    <div class="topic-grid topic-grid--home">
+      {{ $goCount := len $goPosts }}
+      {{ $algoCount := len $algoPosts }}
+      {{ $modulePosts := where $posts "Params.series" "intersect" (slice "Go 模块与依赖管理") }}
+      {{ $grpcSection := site.GetPage "section" "grpc" }}
+      {{ $rabbitmqSection := site.GetPage "section" "rabbitmq" }}
+      {{ $grpcCount := 0 }}{{ with $grpcSection }}{{ $grpcCount = len .Pages }}{{ end }}
+      {{ $rabbitmqCount := 0 }}{{ with $rabbitmqSection }}{{ $rabbitmqCount = len .Pages }}{{ end }}
 
-  {{ if gt (len $modulePosts) 0 }}
-  <section class="surface surface--feature">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">Go 模块专题</p>
-        <h2>依赖管理与模块化实践</h2>
-      </div>
-      <a class="text-link" href="{{ "go-modules/" | relURL }}">进入专题</a>
-    </div>
-    <div class="entry-list">
-      {{ range first 2 $modulePosts }}
-        <a class="entry-card" href="{{ .RelPermalink }}">
-          <strong>{{ .Title }}</strong>
-          <p>{{ .Summary | default (.Plain | truncate 90) }}</p>
-          <span class="entry-card__meta">{{ .Date.Format site.Params.dateFormat }}</span>
-        </a>
-      {{ end }}
+      <a class="topic-card" href="{{ "go-engineering/" | relURL }}">
+        <strong>Go 工程</strong>
+        <p>并发、工程化、性能与模块实践</p>
+        <span>{{ $goCount }} 篇文章</span>
+      </a>
+      <a class="topic-card" href="{{ "algorithms/" | relURL }}">
+        <strong>算法题解</strong>
+        <p>数组、二分、DP、单调栈等专题</p>
+        <span>{{ $algoCount }} 篇题解</span>
+      </a>
+      <a class="topic-card" href="{{ "go-modules/" | relURL }}">
+        <strong>模块专题</strong>
+        <p>go.mod、版本约束与发布实践</p>
+        <span>{{ len $modulePosts }} 篇文章</span>
+      </a>
+      <a class="topic-card" href="{{ "grpc/" | relURL }}">
+        <strong>gRPC 学习</strong>
+        <p>Proto、流式 RPC、拦截器、TLS</p>
+        <span>{{ $grpcCount }} 天内容</span>
+      </a>
+      <a class="topic-card" href="{{ "rabbitmq/" | relURL }}">
+        <strong>RabbitMQ 学习</strong>
+        <p>可靠性、重试、幂等、队列运维</p>
+        <span>{{ $rabbitmqCount }} 天内容</span>
+      </a>
+      <a class="topic-card" href="{{ "snippets/" | relURL }}">
+        <strong>代码片段</strong>
+        <p>Go 技巧、算法模板与速查</p>
+        <span>{{ len $snippets }} 条</span>
+      </a>
     </div>
   </section>
-  {{ end }}
-
-  {{ if or $grpcSection $rabbitmqSection }}
-  <section class="surface surface--feature">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">学习路线</p>
-        <h2>30 天专题入口</h2>
-      </div>
-      <a class="text-link" href="{{ "roadmap/" | relURL }}">查看路线图</a>
-    </div>
-    <div class="entry-list">
-      {{ with $grpcSection }}
-        {{ $trackPages := .Pages.ByWeight }}
-        <a class="entry-card" href="{{ .RelPermalink }}">
-          <strong>{{ .Title }}</strong>
-          <p>{{ .Description | default "按 30 天节奏把 gRPC 从环境搭建推进到流式 RPC、拦截器、TLS 与生产化实践。" }}</p>
-          <span class="entry-card__meta">{{ len $trackPages }} 天内容 · 4 周节奏</span>
-        </a>
-      {{ end }}
-      {{ with $rabbitmqSection }}
-        {{ $trackPages := .Pages.ByWeight }}
-        <a class="entry-card" href="{{ .RelPermalink }}">
-          <strong>{{ .Title }}</strong>
-          <p>{{ .Description | default "按 30 天节奏系统学习 RabbitMQ 的模型、可靠性、重试、幂等、队列类型与运维实践。" }}</p>
-          <span class="entry-card__meta">{{ len $trackPages }} 天内容 · 4 周节奏</span>
-        </a>
-      {{ end }}
-    </div>
-  </section>
-  {{ end }}
 
   <section class="surface surface--stream">
     <div class="section-head">
@@ -179,7 +96,6 @@
         <h2>学习内容最近更新</h2>
       </div>
     </div>
-
     <div class="card-grid">
       {{ range first 6 $latestArticles }}
         {{ partial "article-card.html" . }}
@@ -187,26 +103,5 @@
     </div>
   </section>
 
-  <section class="surface surface--muted surface--notes">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">短笔记</p>
-        <h2>Go 技巧、算法模板与代码片段</h2>
-      </div>
-      <a class="text-link" href="{{ "snippets/" | relURL }}">查看更多</a>
-    </div>
-
-    <div class="snippet-list">
-      {{ range first 4 $snippets }}
-        <a class="snippet-item" href="{{ .RelPermalink }}">
-          <div>
-            <h3>{{ .Title }}</h3>
-            <p>{{ .Summary | default (.Plain | truncate 96) }}</p>
-          </div>
-          <span>{{ .Date.Format site.Params.dateFormat }}</span>
-        </a>
-      {{ end }}
-    </div>
-  </section>
 </div>
 {{ end }}
