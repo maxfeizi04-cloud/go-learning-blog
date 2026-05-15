@@ -1,6 +1,27 @@
 +++
 title = "gRPC 学习"
 description = "按 30 天学习节奏整理 gRPC 在 Go 里的环境搭建、Proto 设计、流式 RPC、拦截器、TLS 与生产化实践。"
+
+[listConfig]
+eyebrow = "gRPC 学习"
+groupBy = "week"
+totalWeeks = 5
+
+[[listConfig.roadmap]]
+title = "第 1 周"
+description = "先把环境、proto、codegen、最小 server/client 链路搭通。"
+
+[[listConfig.roadmap]]
+title = "第 2 周"
+description = "重点练习 proto 设计、字段演进和两个基础业务服务。"
+
+[[listConfig.roadmap]]
+title = "第 3 周"
+description = "把四种 RPC 模式、context、deadline 和错误处理串起来。"
+
+[[listConfig.roadmap]]
+title = "第 4 周"
+description = "补齐 metadata、interceptor、TLS、reflection、health、graceful shutdown 与性能认知。"
 +++
 
 这里集中整理 gRPC 的 30 天学习内容。页面不按发布时间，而按学习顺序组织，适合逐天推进。

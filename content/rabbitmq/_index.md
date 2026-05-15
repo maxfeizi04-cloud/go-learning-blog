@@ -1,6 +1,27 @@
 +++
 title = "RabbitMQ 学习"
 description = "按 30 天学习节奏整理 RabbitMQ 的模型、可靠性、重试、幂等、队列类型、Streams 与运维实践。"
+
+[listConfig]
+eyebrow = "RabbitMQ 学习"
+groupBy = "week"
+totalWeeks = 4
+
+[[listConfig.roadmap]]
+title = "第 1 周"
+description = "先把模型概念和 6 个官方基础教程全部跑通。"
+
+[[listConfig.roadmap]]
+title = "第 2 周"
+description = "重点补齐可靠性、ack、prefetch、publisher confirm 与重连边界。"
+
+[[listConfig.roadmap]]
+title = "第 3 周"
+description = "集中解决 TTL、DLX、重试链路、毒消息和业务幂等。"
+
+[[listConfig.roadmap]]
+title = "第 4 周"
+description = "学习队列类型、Streams、policy、监控、集群与最终项目集成。"
 +++
 
 这里集中整理 RabbitMQ 的 30 天学习内容。页面重点强调按天推进和按周复盘。
