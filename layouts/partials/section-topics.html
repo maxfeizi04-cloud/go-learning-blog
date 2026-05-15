@@ -1,0 +1,35 @@
+{{ $topics := .Params.listConfig.topics }}
+{{ if $topics }}
+<section class="surface surface--catalog">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">专题索引</p>
+      <h2>按知识点复习</h2>
+    </div>
+  </div>
+
+  <div class="topic-grid topic-grid--wide">
+    {{ range $topics }}
+      {{ $count := 0 }}
+      {{ if isset . "tag" }}
+        {{ $filtered := where site.RegularPages.ByDate.Reverse "Params.tags" "intersect" (slice .tag) }}
+        {{ if isset . "sectionFilter" }}
+          {{ $filtered = where $filtered "Section" .sectionFilter }}
+        {{ end }}
+        {{ $count = len $filtered }}
+      {{ else if isset . "difficulty" }}
+        {{ $filtered := where site.RegularPages.ByDate.Reverse "Params.difficulty" .difficulty }}
+        {{ $count = len $filtered }}
+      {{ else if isset . "series" }}
+        {{ $filtered := where site.RegularPages.ByDate.Reverse "Params.series" "intersect" (slice .series) }}
+        {{ $count = len $filtered }}
+      {{ end }}
+      <a class="topic-card" href="{{ .href | relURL }}">
+        <strong>{{ .title }}</strong>
+        <p>{{ .description }}</p>
+        <span>{{ $count }} 篇文章</span>
+      </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
