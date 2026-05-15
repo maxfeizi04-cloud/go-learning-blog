@@ -1,0 +1,19 @@
+{{ $roadmap := .Params.listConfig.roadmap }}
+{{ if $roadmap }}
+<section class="surface roadmap-group">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">学习节奏</p>
+      <h2>4 周完成 30 天</h2>
+    </div>
+  </div>
+  <div class="roadmap-list">
+    {{ range $roadmap }}
+    <div class="roadmap-item roadmap-item--static">
+      <strong>{{ .title }}</strong>
+      <p>{{ .description }}</p>
+    </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
