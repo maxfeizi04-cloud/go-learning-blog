@@ -1,55 +1,69 @@
 {{ define "main" }}
-{{ $sectionLabel := partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" .Title) }}
+
 {{ partial "breadcrumb.html" . }}
-<section class="page-hero">
-  <p class="eyebrow">{{ $sectionLabel }}</p>
-  <h1>{{ .Title }}</h1>
-  {{ with .Description }}
-    <p class="page-hero__lead">{{ . }}</p>
-  {{ else }}
-    {{ with .Content }}
-      <div class="page-hero__lead">{{ . }}</div>
+{{ partial "section-hero.html" . }}
+
+{{ with .Content }}
+  {{ if not $.Description }}
+  <section class="surface">
+    <div class="prose">{{ . }}</div>
+  </section>
+  {{ end }}
+{{ end }}
+
+{{ $listConfig := .Params.listConfig }}
+
+{{ if $listConfig.filter }}
+  {{ partial "section-filter.html" . }}
+{{ end }}
+
+{{ if $listConfig.topics }}
+  {{ partial "section-topics.html" . }}
+{{ end }}
+
+{{ if eq ($listConfig.groupBy | default "") "week" }}
+  {{ partial "section-roadmap.html" . }}
+
+  {{ $pages := .Pages.ByWeight }}
+  {{ $totalWeeks := $listConfig.totalWeeks | default 4 }}
+  {{ range seq 1 $totalWeeks }}
+    {{ $week := . }}
+    {{ $weekPages := where $pages "Params.week" $week }}
+    {{ if gt (len $weekPages) 0 }}
+      <section class="surface surface--catalog">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Week {{ $week }}</p>
+            <h2>第 {{ $week }} 周</h2>
+          </div>
+        </div>
+        <div class="card-grid card-grid--wide">
+          {{ range $weekPages }}
+            {{ partial "article-card.html" . }}
+          {{ end }}
+        </div>
+      </section>
     {{ end }}
   {{ end }}
-</section>
 
-{{ if eq .Section "posts" }}
-  <section class="surface filter-panel">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">快速筛选</p>
-        <h2>算法难度与标签筛选</h2>
-      </div>
-    </div>
-    <div class="filter-row">
-      <a class="filter-pill filter-pill--active" href="{{ "posts/" | relURL }}">全部文章</a>
-      <a class="filter-pill" href="{{ "tags/algorithm/" | relURL }}">算法题解</a>
-      <a class="filter-pill" href="{{ "difficulties/easy/" | relURL }}">入门</a>
-      <a class="filter-pill" href="{{ "difficulties/medium/" | relURL }}">中等</a>
-      <a class="filter-pill" href="{{ "tags/array/" | relURL }}">#数组</a>
-      <a class="filter-pill" href="{{ "tags/hash-table/" | relURL }}">#哈希表</a>
-      <a class="filter-pill" href="{{ "tags/binary-search/" | relURL }}">#二分</a>
-      <a class="filter-pill" href="{{ "tags/dynamic-programming/" | relURL }}">#动态规划</a>
-      <a class="filter-pill" href="{{ "tags/monotonic-stack/" | relURL }}">#单调栈</a>
-    </div>
-  </section>
-{{ end }}
-
-{{ $pages := .Pages.ByDate.Reverse }}
-{{ if gt (len $pages) 0 }}
-  {{ $paginator := .Paginate $pages }}
-  <section class="surface">
-    <div class="card-grid">
-      {{ range $paginator.Pages }}
-        {{ partial "article-card.html" . }}
-      {{ end }}
-    </div>
-  </section>
-  {{ partial "pager.html" $paginator }}
 {{ else }}
-  <section class="surface empty-state">
-    <h2>这里暂时还没有内容</h2>
-    <p>你可以先用 Hugo 新建一篇文章，然后继续写你的 Go 学习记录。</p>
-  </section>
+  {{ $pages := .Pages.ByDate.Reverse }}
+  {{ if gt (len $pages) 0 }}
+    {{ $paginator := .Paginate $pages }}
+    <section class="surface surface--catalog">
+      <div class="card-grid card-grid--wide">
+        {{ range $paginator.Pages }}
+          {{ partial "article-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+    {{ partial "pager.html" $paginator }}
+  {{ else }}
+    <section class="surface empty-state">
+      <h2>这里暂时还没有内容</h2>
+      <p>你可以先用 Hugo 新建一篇文章，然后继续写你的 Go 学习记录。</p>
+    </section>
+  {{ end }}
 {{ end }}
+
 {{ end }}
