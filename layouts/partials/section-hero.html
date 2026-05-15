@@ -1,0 +1,14 @@
+{{ $eyebrow := .Params.listConfig.eyebrow | default (partial "page-label.html" (dict "kind" "section" "value" .Section "fallback" "")) }}
+<section class="page-hero">
+  {{ with $eyebrow }}
+    <p class="eyebrow">{{ . }}</p>
+  {{ end }}
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}
+    <p class="page-hero__lead">{{ . }}</p>
+  {{ else }}
+    {{ with .Content }}
+      <div class="page-hero__lead">{{ . }}</div>
+    {{ end }}
+  {{ end }}
+</section>
