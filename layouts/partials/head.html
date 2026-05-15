@@ -11,8 +11,16 @@
 {{ if .Params.cover }}
   {{ $image = (.Params.cover | absURL) }}
 {{ end }}
-{{ $css := resources.Get "css/main.css" | minify | fingerprint }}
-{{ $criticalCSS := partial "critical-css.html" . }}
+{{ $tokens := resources.Get "css/0-tokens.css" }}
+{{ $reset := resources.Get "css/1-reset.css" }}
+{{ $layout := resources.Get "css/2-layout.css" }}
+{{ $components := resources.Get "css/3-components.css" }}
+{{ $pages := resources.Get "css/4-pages.css" }}
+{{ $article := resources.Get "css/5-article.css" }}
+{{ $dark := resources.Get "css/6-dark.css" }}
+{{ $utilities := resources.Get "css/7-utilities.css" }}
+{{ $css := slice $tokens $reset $layout $components $pages $article $dark $utilities | resources.Concat "css/main.css" | minify | fingerprint }}
+{{ $critical := resources.Get "css/critical.css" | minify }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ $title }}</title>
@@ -20,8 +28,9 @@
 <meta name="author" content="{{ site.Params.author }}">
 <meta name="theme-color" content="#0b7a5a">
 <link rel="canonical" href="{{ .Permalink }}">
-<style>{{ $criticalCSS | safeCSS }}</style>
-<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<style>{{ $critical.Content | safeCSS }}</style>
+<link rel="preload" href="{{ $css.RelPermalink }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ $css.RelPermalink }}"></noscript>
 {{ with .OutputFormats.Get "RSS" }}
 <link rel="alternate" type="application/rss+xml" title="{{ $pageTitle | default site.Title }}" href="{{ .RelPermalink }}">
 {{ end }}
