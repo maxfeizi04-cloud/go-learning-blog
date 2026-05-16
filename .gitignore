@@ -10,3 +10,4 @@ resources/_gen/
 .DS_Store
 Thumbs.db
 .idea/
+__pycache__/

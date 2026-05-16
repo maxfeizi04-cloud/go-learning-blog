@@ -13,8 +13,8 @@
 {{ $pages := .Pages.ByDate.Reverse }}
 {{ if gt (len $pages) 0 }}
   {{ $paginator := .Paginate $pages }}
-  <section class="surface">
-    <div class="card-grid">
+  <section class="surface surface--catalog">
+    <div class="card-grid card-grid--wide">
       {{ range $paginator.Pages }}
         {{ partial "article-card.html" . }}
       {{ end }}
