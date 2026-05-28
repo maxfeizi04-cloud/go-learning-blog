@@ -5,8 +5,8 @@
 /* Card — default card for articles, topics, entries, roadmap */
 .card {
   display: grid;
-  gap: var(--space-sm);
-  padding: var(--space-lg);
+  gap: 6px;
+  padding: 20px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   background: var(--surface-card);
@@ -93,7 +93,7 @@
 }
 
 .card__title {
-  margin: var(--space-sm) 0 var(--space-xs);
+  margin: 6px 0 2px;
   font-family: var(--font-serif);
   font-size: var(--text-subhead);
   line-height: var(--leading-subhead);
@@ -102,7 +102,7 @@
 .card__desc {
   margin: 0;
   color: var(--text-secondary);
-  line-height: 1.65;
+  line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
@@ -154,7 +154,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
 }
 
 .tag-pill {
