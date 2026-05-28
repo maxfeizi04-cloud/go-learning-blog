@@ -1,7 +1,7 @@
 :root {
   --content-width: 1520px;
   --content-gutter: clamp(16px, 2.4vw, 36px);
-  --hero-max-width: 1600px;
+  --hero-max-width: 1520px;
   --article-shell-width: 1100px;
   --bg: #f4efe7;
   --text-primary: #1d2d2b;

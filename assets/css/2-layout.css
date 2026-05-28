@@ -408,7 +408,7 @@
   display: grid;
   gap: var(--space-lg);
   margin-top: var(--space-lg);
-  width: min(100%, 1500px);
+  width: min(100%, var(--content-width));
   margin-inline: auto;
 }
 
