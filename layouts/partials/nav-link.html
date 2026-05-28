@@ -7,7 +7,7 @@
   class="nav__link{{ if $isActive }} nav__link--active{{ end }}"
   href="{{ $menuPath }}"
   {{ if $isActive }}aria-current="page"{{ end }}
-  {{ with .ExtraAttr }}{{ . }}{{ end }}
+  {{ with .ExtraAttr }}{{ . | safeHTMLAttr }}{{ end }}
 >
   {{ .Item.Name }}
 </a>
