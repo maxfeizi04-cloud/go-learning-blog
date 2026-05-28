@@ -333,7 +333,7 @@
 }
 
 .article-layout--with-toc {
-  grid-template-columns: minmax(0, 1fr) 380px;
+  grid-template-columns: minmax(0, 1fr) 260px;
   align-items: start;
 }
 
@@ -367,9 +367,9 @@
 }
 
 .toc-card {
-  padding: var(--space-lg);
+  padding: var(--space-md);
   border: 1px solid rgba(11, 122, 90, 0.12);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: linear-gradient(180deg, var(--surface-elevated), rgba(241, 247, 244, 0.94));
   box-shadow: var(--shadow-card);
   position: relative;
