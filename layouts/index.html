@@ -14,8 +14,8 @@
       <p class="landing-hero__lead">{{ site.Params.siteIntro }}</p>
       <p class="landing-hero__body">{{ site.Params.sitePitch }}</p>
       <div class="landing-hero__actions">
-        <a class="button button--primary" href="{{ "posts/" | relURL }}">开始阅读</a>
-        <a class="button button--secondary" href="{{ "roadmap/" | relURL }}">查看路线图</a>
+        <a class="btn btn--primary" href="{{ "posts/" | relURL }}">开始阅读</a>
+        <a class="btn btn--secondary" href="{{ "roadmap/" | relURL }}">查看路线图</a>
       </div>
       <dl class="landing-hero__stats">
         <div>
@@ -56,32 +56,32 @@
       {{ $grpcCount := 0 }}{{ with $grpcSection }}{{ $grpcCount = len .Pages }}{{ end }}
       {{ $rabbitmqCount := 0 }}{{ with $rabbitmqSection }}{{ $rabbitmqCount = len .Pages }}{{ end }}
 
-      <a class="topic-card" href="{{ "go-engineering/" | relURL }}">
+      <a class="topic-card card" href="{{ "go-engineering/" | relURL }}">
         <strong>Go 工程</strong>
         <p>并发、工程化、性能与模块实践</p>
         <span>{{ $goCount }} 篇文章</span>
       </a>
-      <a class="topic-card" href="{{ "algorithms/" | relURL }}">
+      <a class="topic-card card" href="{{ "algorithms/" | relURL }}">
         <strong>算法题解</strong>
         <p>数组、二分、DP、单调栈等专题</p>
         <span>{{ $algoCount }} 篇题解</span>
       </a>
-      <a class="topic-card" href="{{ "go-modules/" | relURL }}">
+      <a class="topic-card card" href="{{ "go-modules/" | relURL }}">
         <strong>模块专题</strong>
         <p>go.mod、版本约束与发布实践</p>
         <span>{{ len $modulePosts }} 篇文章</span>
       </a>
-      <a class="topic-card" href="{{ "grpc/" | relURL }}">
+      <a class="topic-card card" href="{{ "grpc/" | relURL }}">
         <strong>gRPC 学习</strong>
         <p>Proto、流式 RPC、拦截器、TLS</p>
         <span>{{ $grpcCount }} 天内容</span>
       </a>
-      <a class="topic-card" href="{{ "rabbitmq/" | relURL }}">
+      <a class="topic-card card" href="{{ "rabbitmq/" | relURL }}">
         <strong>RabbitMQ 学习</strong>
         <p>可靠性、重试、幂等、队列运维</p>
         <span>{{ $rabbitmqCount }} 天内容</span>
       </a>
-      <a class="topic-card" href="{{ "snippets/" | relURL }}">
+      <a class="topic-card card" href="{{ "snippets/" | relURL }}">
         <strong>代码片段</strong>
         <p>Go 技巧、算法模板与速查</p>
         <span>{{ len $snippets }} 条</span>

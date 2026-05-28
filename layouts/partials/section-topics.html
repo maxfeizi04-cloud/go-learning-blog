@@ -24,7 +24,7 @@
         {{ $filtered := where site.RegularPages.ByDate.Reverse "Params.series" "intersect" (slice .series) }}
         {{ $count = len $filtered }}
       {{ end }}
-      <a class="topic-card" href="{{ .href | relURL }}">
+      <a class="topic-card card" href="{{ .href | relURL }}">
         <strong>{{ .title }}</strong>
         <p>{{ .description }}</p>
         <span>{{ $count }} 篇文章</span>

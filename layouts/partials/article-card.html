@@ -16,8 +16,8 @@
   {{ end }}
 {{ end }}
 <article class="article-card">
-  <a class="article-card__link" href="{{ .RelPermalink }}">
-    <div class="article-card__meta">
+  <a class="article-card__link card" href="{{ .RelPermalink }}">
+    <div class="article-card__meta card__meta">
       <span>{{ .Date.Format site.Params.dateFormat }}</span>
       <span>{{ .ReadingTime }} 分钟</span>
     </div>
@@ -37,8 +37,8 @@
         {{ end }}
       </div>
     {{ end }}
-    <h3>{{ .Title }}</h3>
-    <p>{{ .Summary | default (.Plain | truncate 110) }}</p>
+    <h3 class="card__title">{{ .Title }}</h3>
+    <p class="card__desc">{{ .Summary | default (.Plain | truncate 110) }}</p>
     {{ with .Params.tags }}
       <div class="tag-row">
         {{ range first 3 . }}
