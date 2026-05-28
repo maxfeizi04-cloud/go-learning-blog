@@ -11,3 +11,4 @@ resources/_gen/
 Thumbs.db
 .idea/
 __pycache__/
+.site-check-ci/
