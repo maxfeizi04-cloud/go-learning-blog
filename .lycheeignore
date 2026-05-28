@@ -1,12 +1,12 @@
+# Font preconnect origins (base URLs return 404, only full paths work)
+https://fonts.googleapis.com
+https://fonts.gstatic.com
+
 # Localhost URLs in code examples
 http://localhost:15672
-http://localhost:*
 
 # Example URLs in code
 https://example.com
 
 # Go proxy config values, not actual URLs
 https://proxy.golang.org,direct
-
-# Email (lychee should skip mailto but just in case)
-mailto:*
