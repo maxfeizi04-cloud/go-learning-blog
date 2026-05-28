@@ -1,46 +1,19 @@
-/* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #1a1d1c;
-    --bg-soft: #222725;
-    --surface: rgba(30, 35, 33, 0.92);
-    --surface-strong: #252a28;
-    --surface-muted: #202523;
-    --text: #e8edea;
-    --muted: #9aaaa5;
-    --line: rgba(232, 237, 234, 0.1);
+    --text-primary: #e8edea;
+    --text-secondary: #9aaaa5;
+    --text-tertiary: #6b8079;
+    --surface-card: rgba(30, 35, 33, 0.92);
+    --surface-elevated: rgba(35, 40, 38, 0.96);
+    --border-subtle: rgba(232, 237, 234, 0.08);
+    --border-strong: rgba(232, 237, 234, 0.12);
     --accent: #2ea882;
     --accent-deep: #50c99e;
     --accent-soft: rgba(46, 168, 130, 0.14);
-    --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+    --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.22);
+    --shadow-elevated: 0 24px 60px rgba(0, 0, 0, 0.32);
     color-scheme: dark;
-  }
-
-  body {
-    background:
-      radial-gradient(circle at top left, rgba(24, 28, 26, 0.94), transparent 34%),
-      radial-gradient(circle at bottom right, rgba(46, 168, 130, 0.08), transparent 24%),
-      linear-gradient(135deg, var(--bg), #1c221f);
-  }
-
-  .site-header__inner,
-  .hero__copy,
-  .hero__panel,
-  .surface,
-  .article-body,
-  .toc-card,
-  .article-nav__item,
-  .term-card,
-  .pager,
-  .site-footer__inner {
-    background: var(--surface);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .metric-card,
-  .article-card__link {
-    background: linear-gradient(180deg, rgba(40, 40, 40, 0.72), rgba(35, 35, 35, 0.88));
-    border-color: rgba(255, 255, 255, 0.1);
   }
 
   .prose {
@@ -53,108 +26,55 @@
 
   .prose a {
     color: var(--accent);
-    text-decoration-color: rgba(11, 122, 90, 0.4);
+    text-decoration-color: rgba(46, 168, 130, 0.4);
   }
 
   .prose blockquote,
   .callout {
-    background: rgba(11, 122, 90, 0.1);
+    background: rgba(46, 168, 130, 0.1);
   }
 
   .prose :not(pre) > code {
     background: rgba(255, 255, 255, 0.1);
   }
 
-  .prose pre {
-    background: #181818;
-  }
-
-  .snippet-item,
-  .term-card {
-    background: rgba(40, 40, 40, 0.7);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .entry-card {
-    background: rgba(40, 40, 40, 0.72);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .topic-card {
-    background: linear-gradient(180deg, rgba(40, 40, 40, 0.82), rgba(35, 35, 35, 0.92));
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .roadmap-item {
-    background: rgba(40, 40, 40, 0.74);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .algorithm-visualizer {
-    background: linear-gradient(180deg, rgba(35, 35, 35, 0.96), rgba(40, 40, 40, 0.94));
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .algorithm-visualizer__sample {
-    background: rgba(40, 40, 40, 0.62);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .algorithm-visualizer__board,
-  .algorithm-visualizer__details,
-  .algo-board__lane,
-  .algo-board__panel {
-    background: rgba(40, 40, 40, 0.68);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .algorithm-visualizer__metric {
-    background: rgba(40, 40, 40, 0.84);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .algo-cell {
-    background: rgba(40, 40, 40, 0.84);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .algo-pair {
-    background: rgba(40, 40, 40, 0.86);
-    border-color: rgba(255, 255, 255, 0.1);
+  .prose .highlight pre,
+  .prose pre.chroma {
+    background: linear-gradient(180deg, #1c1c1c, #181818);
   }
 
   .site-search__input {
     background: rgba(40, 40, 40, 0.8);
     border-color: rgba(255, 255, 255, 0.14);
-    color: var(--text);
+    color: var(--text-primary);
   }
 
   .site-search__button {
-    background: rgba(11, 122, 90, 0.2);
+    background: rgba(46, 168, 130, 0.2);
     color: var(--accent);
   }
 
   .site-search__dropdown {
     background: rgba(30, 30, 30, 0.96);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-strong);
   }
 
   .search-result {
     background: rgba(40, 40, 40, 0.72);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-strong);
   }
 
   .search-chip,
   .search-history__clear {
     background: rgba(40, 40, 40, 0.76);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: var(--text);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
   }
 
   .filter-pill {
     background: rgba(40, 40, 40, 0.78);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: var(--text);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
   }
 
   .toc-card {
@@ -169,12 +89,29 @@
 
   .site-search__toggle {
     background: rgba(40, 40, 40, 0.66);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: var(--muted);
+    border-color: var(--border-strong);
+    color: var(--text-secondary);
   }
 
   .site-search--icon .site-search__panel--floating {
     background: rgba(30, 30, 30, 0.97);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-strong);
+  }
+
+  .algorithm-visualizer {
+    background: linear-gradient(180deg, rgba(35, 35, 35, 0.96), rgba(40, 40, 40, 0.94));
+    border-color: var(--border-strong);
+  }
+
+  .algorithm-visualizer__sample,
+  .algorithm-visualizer__metric,
+  .algo-cell,
+  .algo-pair {
+    background: rgba(40, 40, 40, 0.84);
+    border-color: var(--border-strong);
+  }
+
+  .article-head--editorial {
+    background: linear-gradient(180deg, var(--surface-elevated), rgba(30, 33, 31, 0.9));
   }
 }
