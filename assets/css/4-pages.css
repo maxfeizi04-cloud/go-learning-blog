@@ -277,7 +277,7 @@
 }
 
 .article-head--narrow {
-  width: min(100%, 860px);
+  width: min(100%, 960px);
   margin-inline: auto;
 }
 
@@ -355,7 +355,7 @@
 }
 
 .article-body--narrow {
-  width: min(100%, 860px);
+  width: min(100%, 960px);
   margin-inline: auto;
 }
 
@@ -476,12 +476,12 @@
 /* Narrow variant for pages without TOC */
 .article-nav--narrow,
 .article-shell--solo .comments-block {
-  width: min(100%, 860px);
+  width: min(100%, 960px);
   margin-inline: auto;
 }
 
 .related-block--narrow {
-  width: min(100%, 860px);
+  width: min(100%, 960px);
   margin-inline: auto;
 }
 

@@ -24,7 +24,7 @@
   --content-width: 1520px;
   --content-gutter: clamp(16px, 2.4vw, 36px);
   --hero-max-width: 1520px;
-  --article-shell-width: 1100px;
+  --article-shell-width: 1520px;
   --article-body-width: 720px;
 
   /* ── Grid ── */
