@@ -1,47 +1,70 @@
 :root {
-  /* Palette */
+  /* ── Palette ── */
   --bg: #f4efe7;
-  --bg-soft: #efe7db;
-  --surface: rgba(255, 252, 246, 0.9);
-  --surface-strong: #fffaf1;
-  --surface-muted: #ecf2ef;
-  --text: #1d2d2b;
-  --muted: #556563;
-  --line: rgba(29, 45, 43, 0.12);
+  --text-primary: #1d2d2b;
+  --text-secondary: #556563;
+  --text-tertiary: #8a9e9a;
+  --surface-card: rgba(255, 252, 246, 0.92);
+  --surface-elevated: rgba(255, 250, 241, 0.98);
+  --border-subtle: rgba(29, 45, 43, 0.08);
+  --border-strong: rgba(29, 45, 43, 0.14);
   --accent: #0b7a5a;
   --accent-deep: #08543f;
   --accent-soft: rgba(11, 122, 90, 0.1);
 
-  /* Shadows */
-  --shadow: 0 24px 80px rgba(38, 55, 50, 0.12);
+  /* ── Shadows ── */
+  --shadow-card: 0 18px 40px rgba(22, 35, 31, 0.08);
+  --shadow-elevated: 0 24px 60px rgba(22, 35, 31, 0.14);
 
-  /* Radii */
-  --radius-xl: 28px;
-  --radius-lg: 22px;
+  /* ── Radii ── */
   --radius-md: 16px;
+  --radius-lg: 24px;
 
-  /* Layout widths */
+  /* ── Layout widths ── */
   --content-width: 1520px;
   --content-gutter: clamp(16px, 2.4vw, 36px);
   --hero-max-width: 1600px;
   --article-shell-width: 1100px;
   --article-body-width: 720px;
 
-  /* Spacing */
-  --section-gap: clamp(48px, 6vw, 80px);
+  /* ── Grid ── */
+  --grid-4: repeat(4, minmax(0, 1fr));
+  --grid-3: repeat(3, minmax(0, 1fr));
+  --grid-2: repeat(2, minmax(0, 1fr));
+  --grid-1: 1fr;
 
-  /* Typography */
+  /* ── Spacing scale ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-section: clamp(48px, 6vw, 80px);
+
+  /* ── Typography ── */
   --font-sans: "IBM Plex Sans", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-serif: "Noto Serif SC", "Source Han Serif SC", "STSong", serif;
   --font-mono: "IBM Plex Mono", "Cascadia Code", Consolas, monospace;
 
-  /* Type scale — magazine direction */
+  /* Type scale */
+  --text-display: clamp(56px, 7vw, 96px);
+  --text-headline: clamp(36px, 4.5vw, 54px);
+  --text-title: clamp(28px, 3vw, 38px);
+  --text-subhead: clamp(20px, 1.5vw, 26px);
   --text-body: 1.1rem;
   --text-small: 0.875rem;
   --text-caption: 0.75rem;
-  --leading-body: 1.8;
-  --leading-heading: 1.2;
+  --text-eyebrow: 0.6875rem;
 
-  /* Transitions */
+  /* Leading */
+  --leading-display: 0.94;
+  --leading-heading: 1.12;
+  --leading-title: 1.2;
+  --leading-subhead: 1.32;
+  --leading-body: 1.8;
+
+  /* ── Transitions ── */
   --ease-out: 300ms ease-out;
 }
