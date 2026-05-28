@@ -258,6 +258,8 @@
   border-radius: var(--radius-lg);
   background: var(--surface-elevated);
   margin-top: var(--space-md);
+  min-width: 0;
+  overflow-wrap: anywhere;
   animation: intro-rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -339,6 +341,7 @@
   display: grid;
   gap: var(--space-lg);
   min-width: 0;
+  overflow: hidden;
 }
 
 /* Article body */
@@ -347,6 +350,7 @@
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
   background: var(--surface-card);
+  min-width: 0;
   box-shadow: var(--shadow-card);
 }
 
