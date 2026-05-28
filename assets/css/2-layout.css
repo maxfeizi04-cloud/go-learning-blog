@@ -594,7 +594,7 @@
   .site-header,
   .site-main,
   .site-footer {
-    width: min(calc(100% - 16px), var(--content-width));
+    width: min(calc(100% - var(--space-md)), var(--content-width));
   }
 
   .surface,
