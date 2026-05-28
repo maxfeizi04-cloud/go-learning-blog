@@ -275,7 +275,8 @@
 }
 
 .article-head--narrow {
-  width: 100%;
+  width: min(100%, 860px);
+  margin-inline: auto;
 }
 
 .article-head__intro {
@@ -469,7 +470,6 @@
 }
 
 /* Narrow variant for pages without TOC */
-.article-shell--solo .article-head,
 .article-nav--narrow,
 .article-shell--solo .comments-block {
   width: min(100%, 860px);
